@@ -19,6 +19,14 @@
             "url": "http://localhost:4200/#",
             "webRoot": "${workspaceFolder}",
             "port": 9261
+        },
+        {
+            "name": "Launch Chrome KickertoolUI on Angular CLI Server (2)",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:4200/#",
+            "webRoot": "${workspaceFolder}",
+            "port": 9290
         }
     ]
 }
