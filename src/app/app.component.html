@@ -2,18 +2,21 @@
 <body style="text-align:center">
   <!-- <h1>{{ title }}</h1>
   <img src="assets/images/circle.png" style="max-width: 100%; max-height: 100%"/> -->
-  <div class="container">
-  <div class="jumbotron">
-    <h1>Welcome</h1>
-    <h2>Angular & Bootstrap Demo</h2>
-  </div>
-
-  <div class="panel panel-primary">
-    <div class="panel-heading">Status</div>
-    <div class="panel-body">
-      <h3>{{title}}</h3>
+    <div class="container-fluid bg-circle" style="height: 100%">
+        <!-- <h1>ParcIT Kickertool</h1> -->
+        <div class="row align-items-center" style="height: 100%">
+            <div class="col">
+                <button type="button" class="btn btn-kickertool" data-toggle="modal" data-target="#playeredit-modal" data-backdrop="static" data-keyboard="false">Spielerverwaltung</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-kickertool">Neues Turnier</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-kickertool" disabled>Turnier fortsetzen</button>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+    <app-playeredit></app-playeredit>
 </body>
+
 <router-outlet></router-outlet>

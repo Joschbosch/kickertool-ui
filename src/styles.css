@@ -13,3 +13,24 @@ h1 {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
 }
+
+.btn-kickertool {
+	color: #fff;
+  	border-color: #fff;
+}
+
+.btn-kickertool:hover {
+  color: #fff;
+  background-color: #1c63b7;
+  border-color: #1c63b7;
+}
+
+.btn-kickertool:focus, .btn-kickertool.focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+.btn-kickertool.disabled, .btn-kickertool:disabled {
+  border-color: #dbdbdb;
+  color: #dbdbdb;
+  background-color: transparent;
+}

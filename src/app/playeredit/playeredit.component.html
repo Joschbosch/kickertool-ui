@@ -1,0 +1,37 @@
+<div class="modal fade" id="playeredit-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Spielerverwaltung</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead class="thead-light">
+                        <th scope="col">Vorname</th>
+                        <th scope="col">Nachname</th>
+                        <th style="width: 20%"></th>
+                    </thead>
+                    <tbody>
+                        <tr scope="row" *ngFor="let player of players">
+                            <td>{{player.firstName}}</td>
+                            <td>{{player.lastName}}</td>
+                            <td><i class="fa fa-user-times"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="input-group mb-3">
+                    <input #newplayername (keyup.enter)="addPlayer(newplayername.value)" type="text" class="form-control" placeholder="Neuer Spielername">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-primary" (click)="addPlayer(newplayername.value)">Hinzuf&uuml;gen</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Schlie&szlig;en</button>
+            </div>
+        </div>
+    </div>
+</div>
