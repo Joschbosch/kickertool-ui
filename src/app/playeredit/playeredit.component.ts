@@ -43,7 +43,7 @@ export class PlayereditComponent implements OnInit {
 
     deletePlayer(player: Player): void {
         this.showLoadingSpinner();
-        const playerIndex: number = this.players.findIndex(x => x.uid == player.uid);
+        const playerIndex: number = this.players.findIndex((ePlayer: Player) => ePlayer.uid === player.uid);
 
         this.playerService.deletePlayer(player.uid).subscribe(status => {
             if (status.dtoStatus === 'SUCCESS') {
