@@ -1,5 +1,5 @@
 <div class="modal fade" id="playeredit-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="max-width: 600px; width: 600px">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Spielerverwaltung</h5>
@@ -8,32 +8,32 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-sm">
-                    <thead class="thead-light">
+                <table class="table table-sm table-bordered table-striped">
+                    <thead class="thead-kickertool">
                         <th scope="col">Vorname</th>
                         <th scope="col">Nachname</th>
-                        <th style="width: 20%"></th>
+                        <th scopr="col" style="width: 20%"></th>
                     </thead>
                     <tbody>
                         <tr scope="row" *ngFor="let player of players">
-                            <td>{{player.firstName}}</td>
-                            <td>{{player.lastName}}</td>
+                            <td style="text-align: left">{{player.firstName}}</td>
+                            <td style="text-align: left">{{player.lastName}}</td>
                             <td><i class="fa fa-user-times" (click)="deletePlayer(player)" style="cursor: pointer"></i></td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="input-group mb-3">
-                    <input #newplayername (keyup.enter)="addPlayer(newplayername.value)" type="text" class="form-control" placeholder="Neuer Spielername">
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-primary" (click)="addPlayer(newplayername.value)">Hinzuf&uuml;gen</button>
+                <div class="input-group">
+                    <input #newplayername (keyup.enter)="addPlayer(newplayername.value)" type="text" class="form-control" placeholder="Neuer Spielername" style="width: 80%">
+                    <div class="input-group-append" style="width: 20%">
+                        <button type="button" class="btn btn-kickertool-green btn-block" (click)="addPlayer(newplayername.value)">Hinzuf&uuml;gen</button>
                     </div>
                 </div>
                 <div #loadingSpinner class="spinner-border" role="status" style="display: none">
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Schlie&szlig;en</button>
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-secondary btn-block" style="width: 20%" data-dismiss="modal">Schlie&szlig;en</button>
             </div>
         </div>
     </div>
