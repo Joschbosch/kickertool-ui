@@ -28,9 +28,7 @@
                         <button type="button" class="btn btn-kickertool-green btn-block" (click)="addPlayer(newplayername.value)">Hinzuf&uuml;gen</button>
                     </div>
                 </div>
-                <div #loadingSpinner class="spinner-border" role="status" style="display: none">
-                    <span class="sr-only">Loading...</span>
-                </div>
+                <app-loadandresponse></app-loadandresponse>
             </div>
             <div class="modal-footer" >
                 <button type="button" class="btn btn-secondary btn-block" style="width: 20%" data-dismiss="modal">Schlie&szlig;en</button>

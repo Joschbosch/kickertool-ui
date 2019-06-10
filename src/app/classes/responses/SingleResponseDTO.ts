@@ -1,3 +1,5 @@
-export class SingeResponseDTO<T> {
-    dtoValue: T
+import { DTO } from './DTO';
+
+export class SingeResponseDTO<T> extends DTO {
+    dtoValue: T;
 }

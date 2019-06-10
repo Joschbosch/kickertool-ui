@@ -1,3 +1,14 @@
-<p>
-  loadandresponse works!
-</p>
+<div class="row">
+        <div class="col">
+            <div #loadingSpinner class="spinner-border" role="status" style="display: none">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div #alertMessage class="alert alert-danger alert-dismissible fade show w-100 h-100" role="alert" style="text-align: left; display: none">
+                <h5 class="alert-heading">Ein Fehler ist aufgetreten</h5>
+                <p>{{errorMessage}}</p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>

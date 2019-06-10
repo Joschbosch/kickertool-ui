@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Player } from '../classes/Player';
 import { PlayerService } from '../services/player.service';
+import { LoadandresponseComponent } from '../loadandresponse/loadandresponse.component';
 
 @Component({
     selector: 'app-playeredit',
@@ -9,8 +10,8 @@ import { PlayerService } from '../services/player.service';
 })
 export class PlayereditComponent implements OnInit {
 
+    @ViewChild(LoadandresponseComponent, {static: false}) loadAndResponse: LoadandresponseComponent;
     @ViewChild('newplayername', { static: false }) inputForm: ElementRef;
-    @ViewChild('loadingSpinner', {static: false}) loadingSpinner: ElementRef;
 
     players = Player[0];
 
@@ -18,23 +19,15 @@ export class PlayereditComponent implements OnInit {
 
     addPlayer(newName: string) {
 
-        this.showLoadingSpinner();
+        this.loadAndResponse.showLoadingSpinner();
         const nameSplit = newName.split(' ');
 
         this.playerService.insertNewPlayer(nameSplit[0], nameSplit[1]).subscribe(singleResponseDTO => {
             this.players.push(singleResponseDTO.dtoValue);
             this.inputForm.nativeElement.value = '';
-            this.hideLoadingSpinner();
+            this.loadAndResponse.hideLoadingSpinner();
         });
 
-    }
-
-    showLoadingSpinner(): void {
-        this.loadingSpinner.nativeElement.style.display = 'inline-block';
-    }
-
-    hideLoadingSpinner(): void {
-        this.loadingSpinner.nativeElement.style.display = 'none';
     }
 
     ngOnInit() {
@@ -42,21 +35,23 @@ export class PlayereditComponent implements OnInit {
     }
 
     deletePlayer(player: Player): void {
-        this.showLoadingSpinner();
+        this.loadAndResponse.showLoadingSpinner();
         const playerIndex: number = this.players.findIndex((ePlayer: Player) => ePlayer.uid === player.uid);
 
         this.playerService.deletePlayer(player.uid).subscribe(status => {
             if (status.dtoStatus === 'SUCCESS') {
                 this.players.splice(playerIndex, 1);
             }
-            this.hideLoadingSpinner();
+            this.loadAndResponse.hideLoadingSpinner();
         });
 
     }
 
     getAllPlayer(): void {
         this.playerService.getAllPlayer().subscribe(listResponseDto => {
-            this.players = listResponseDto.dtoValueList;
+            if (this.loadAndResponse.checkResponse(listResponseDto)) {
+                this.players = listResponseDto.dtoValueList;
+            }
         });
     }
 

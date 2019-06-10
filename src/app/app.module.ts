@@ -7,12 +7,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PlayereditComponent } from './playeredit/playeredit.component';
 import { LoadandresponseComponent } from './loadandresponse/loadandresponse.component';
+import { NewtournamentComponent } from './newtournament/newtournament.component';
+import { OnlynumberDirective } from './classes/directives/onlynumber.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlayereditComponent,
-    LoadandresponseComponent
+    LoadandresponseComponent,
+    NewtournamentComponent,
+    OnlynumberDirective
   ],
   imports: [
     BrowserModule,

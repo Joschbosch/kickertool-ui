@@ -1,4 +1,5 @@
-export class StatusOnlyDTO {
-    dtoStatus: string;
+import { DTO } from './DTO';
+
+export class StatusOnlyDTO extends DTO {
 
 }
