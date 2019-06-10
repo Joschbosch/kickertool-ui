@@ -1,5 +1,5 @@
 <div class="modal fade" id="newtournament-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document" style="max-width: 600px; width: 600px">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Neues Turnier erstellen</h5>
@@ -10,8 +10,12 @@
             <form style="text-align: left">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="tournamentName">Turniername</label>
-                        <input class="form-control" id="tournamentName" placeholder="Turniername" />
+                        <div class="row">
+                            <div class="col">
+                                <label for="tournamentName">Turniername</label>
+                                <input class="form-control" id="tournamentName" placeholder="Turniername" />
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="row">
@@ -25,10 +29,6 @@
                                 <input appOnlyNumber class="form-control" id="tournamentRandomRounds"
                                     placeholder="{{defaultConfig?.settings.randomRounds}}" />
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
                             <div class="col">
                                 <label for="tournamentGamesToWin">Anzahl Spiele f&uuml;r Sieg</label>
                                 <input appOnlyNumber class="form-control" id="tournamentGamesToWin"
@@ -49,17 +49,14 @@
                                     placeholder="{{defaultConfig?.settings.minutesPerMatch}}" />
                             </div>
                             <div class="col">
-                                <label for="tournamentPointsToWin">Punkte f&uuml;r Sieg</label>
+                                <label for="tournamentPointsToWin">Punkte Sieg</label>
                                 <input appOnlyNumber class="form-control" id="tournamentPointsToWin"
                                     placeholder="{{defaultConfig?.settings.pointsForWinner}}" />
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
                             <div class="col">
-                                <label for="tournamentPointsForDraw">Punkte f&uuml;r Unentschieden</label>
-                                <input appOnlyNumber class="form-control" id="tournamentPointsForDraw" placeholder="{{defaultConfig?.settings.pointsForDraw}}" />
+                                <label for="tournamentPointsForDraw">Punkte Unentschieden</label>
+                                <input appOnlyNumber class="form-control" id="tournamentPointsForDraw"
+                                    placeholder="{{defaultConfig?.settings.pointsForDraw}}" />
                             </div>
                             <div class="col">
                                 <label for="tournamentMode">Turniermodus</label>
@@ -69,9 +66,37 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check form-check-inline">
                         <input type="checkbox" class="form-check-input" id="tournamentFixedTeams">
                         <label class="form-check-label" for="tournamentFixedTeams">Feste Teams</label>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="form-group">
+                        <h6>Spielerauswahl</h6>
+                        <div class="row">
+                            <div class="col">
+                                <!-- <input type="text" class="form-control" placeholder="Filter" /> -->
+                                <button type="button" class="btn btn-light w-100"
+                                    (click)="moveAllToRight()">&gt;&gt;</button>
+                                <div class="list-group" style="height: 200px; overflow-y: scroll">
+                                    <button type="button" class="list-group-item list-group-item-action"
+                                        *ngFor="let player of selectablePlayers" (click)="moveToRight(player)">
+                                        {{player.firstName}} {{player.lastName}}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-light w-100"
+                                    (click)="moveAllToLeft()">&lt;&lt;</button>
+                                <div class="list-group" style="height: 200px; overflow-y: scroll">
+                                    <button type="button" class="list-group-item list-group-item-action"
+                                        *ngFor="let player of selectedPlayer" (click)="moveToLeft(player)">
+                                        {{player.firstName}} {{player.lastName}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <app-loadandresponse></app-loadandresponse>
                 </div>
