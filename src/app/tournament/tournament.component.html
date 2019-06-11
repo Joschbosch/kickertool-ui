@@ -1,3 +1,35 @@
-<p>
-  tournament works!
-</p>
+<div class="container-fluid" style="height: 100%; padding: 5%">
+    <div class="row align-items-center">
+        <div class="col" *ngIf="tournament">
+            <h1>{{tournament.name}}</h1>
+        </div>
+    </div>
+    <div class="row align-items-center">
+        <div class="col-6">
+            <button type="button" class="btn btn-primary w-100" (click)="onNewRoundClicked()">Neue Runde starten</button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-6">
+            <table class="table table-sm table-bordered table-striped">
+                <thead class="thead-kickertool">
+                    <th scope="col">Team 1</th>
+                    <th scope="col">Ergebnis</th>
+                    <th scope="col">Team 2</th>
+                    <th scope="col">Tisch</th>
+                    <th scope="col"></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Team 1 <br/> Team 2</td>
+                        <td>0:0</td>
+                        <td>Team 1 <br/> Team 2</td>
+                        <td>Tisch 1</td>
+                        <td><button type="button" class="btn btn-success">Ergebnis</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

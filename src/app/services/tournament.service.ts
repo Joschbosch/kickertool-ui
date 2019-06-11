@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TournamentConfigurationDTO } from '../classes/TournamentConfigurationDTO';
 import { SingleResponseDTO } from '../classes/responses/SingleResponseDTO';
@@ -17,4 +17,16 @@ export class TournamentService {
     createNewTournament(config: TournamentConfigurationDTO): Observable<SingleResponseDTO<TournamentDTO>> {
         return this.http.post<SingleResponseDTO<TournamentDTO>>(this.tournamentUrl + '/createandstart', config);
     }
+
+    getTournament(uuid: string): Observable<SingleResponseDTO<TournamentDTO>> {
+        console.log('Get Tournament');
+        return this.http.get<SingleResponseDTO<TournamentDTO>>(this.tournamentUrl + '/' + uuid);
+    }
+
+    startNextRound(uuid: string): Observable<SingleResponseDTO<TournamentDTO>> {
+        console.log('Starting Service');
+		const params = new HttpParams().set('uuidString', uuid);
+        return this.http.get<SingleResponseDTO<TournamentDTO>>(this.tournamentUrl + '/nextround?uuidString' + uuid);
+    }
+
 }
