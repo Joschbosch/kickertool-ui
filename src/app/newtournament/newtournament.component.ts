@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TournamentconfigurationService } from '../services/tournamentconfiguration.service';
 import { TournamentConfigurationDTO } from '../classes/TournamentConfigurationDTO';
 import { Player } from '../classes/Player';
@@ -7,6 +7,7 @@ import { TournamentModeDTO } from '../classes/TournamentModeDTO';
 import { TournamentSettings } from '../classes/TournamentSettings';
 import { TournamentService } from '../services/tournament.service';
 import { LoadandresponseComponent } from '../loadandresponse/loadandresponse.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-newtournament',
@@ -16,6 +17,7 @@ import { LoadandresponseComponent } from '../loadandresponse/loadandresponse.com
 export class NewtournamentComponent implements OnInit {
 
     @ViewChild(LoadandresponseComponent, {static: false}) loadAndResponse: LoadandresponseComponent;
+    @ViewChild('modalCloseButton', {static: false}) modalCloseButton: ElementRef;
 
     currentConfig: TournamentConfigurationDTO = {
         name: '',
@@ -29,7 +31,8 @@ export class NewtournamentComponent implements OnInit {
     playerSelectionPage = false;
     tournamentModes: TournamentModeDTO[] = [];
 
-    constructor(private tournamentConfigurationService: TournamentconfigurationService,
+    constructor(private router: Router,
+                private tournamentConfigurationService: TournamentconfigurationService,
                 private playerService: PlayerService,
                 private tournamentService: TournamentService) { }
 
@@ -88,11 +91,13 @@ export class NewtournamentComponent implements OnInit {
     }
 
     onSubmit() {
-
         this.completeConfig();
         this.currentConfig.selectedPlayer.push(...this.selectedPlayer);
+        this.loadAndResponse.showLoadingSpinner();
         this.tournamentService.createNewTournament(this.currentConfig).subscribe(singleResponse => {
-            console.log(singleResponse.dtoStatus);
+            this.loadAndResponse.hideLoadingSpinner();
+            this.modalCloseButton.nativeElement.click();
+            this.router.navigate(['/tournamentview', singleResponse.dtoValue.uid]);
         });
     }
 

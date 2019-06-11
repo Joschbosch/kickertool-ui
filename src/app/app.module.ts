@@ -9,6 +9,8 @@ import { PlayereditComponent } from './playeredit/playeredit.component';
 import { LoadandresponseComponent } from './loadandresponse/loadandresponse.component';
 import { NewtournamentComponent } from './newtournament/newtournament.component';
 import { OnlynumberDirective } from './classes/directives/onlynumber.directive';
+import { TournamentComponent } from './tournament/tournament.component';
+import { MainmenuComponent } from './mainmenu/mainmenu.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { OnlynumberDirective } from './classes/directives/onlynumber.directive';
     PlayereditComponent,
     LoadandresponseComponent,
     NewtournamentComponent,
-    OnlynumberDirective
+    OnlynumberDirective,
+    TournamentComponent,
+    MainmenuComponent
   ],
   imports: [
     BrowserModule,

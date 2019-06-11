@@ -4,10 +4,3 @@ body {
 	background: linear-gradient(to bottom,  #2b3e2e 0%,#4c8d58 49%,#2b3e2e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 
 }
-
-.bg-circle {
-	background-image: url('./../assets/images/circle.png');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: contain;
-}
