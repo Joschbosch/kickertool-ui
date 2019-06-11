@@ -24,7 +24,9 @@ export class TournamentComponent implements OnInit {
     }
 
     onNewRoundClicked(): void {
-        this.tournamentService.startNextRound(this.tournament.uid);
+        this.tournamentService.startNextRound(this.tournament.uid).subscribe(singleResponse => {
+			console.log('Came back');
+		});
     }
 
 }

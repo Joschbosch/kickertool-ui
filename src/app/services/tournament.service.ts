@@ -24,9 +24,8 @@ export class TournamentService {
     }
 
     startNextRound(uuid: string): Observable<SingleResponseDTO<TournamentDTO>> {
-        console.log('Starting Service');
 		const params = new HttpParams().set('uuidString', uuid);
-        return this.http.get<SingleResponseDTO<TournamentDTO>>(this.tournamentUrl + '/nextround?uuidString' + uuid);
+        return this.http.get<SingleResponseDTO<TournamentDTO>>(this.tournamentUrl + '/nextround', {params});
     }
 
 }
