@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TournamentconfigurationService } from '../services/tournamentconfiguration.service';
-import { TournamentConfiguration } from '../classes/TournamentConfiguration';
+import { TournamentConfigurationDTO } from '../classes/TournamentConfigurationDTO';
 import { Player } from '../classes/Player';
 import { PlayerService } from '../services/player.service';
-import { concat } from 'rxjs';
+import { TournamentModeDTO } from '../classes/TournamentModeDTO';
+import { TournamentSettings } from '../classes/TournamentSettings';
+import { TournamentService } from '../services/tournament.service';
+import { LoadandresponseComponent } from '../loadandresponse/loadandresponse.component';
 
 @Component({
   selector: 'app-newtournament',
@@ -12,13 +15,28 @@ import { concat } from 'rxjs';
 })
 export class NewtournamentComponent implements OnInit {
 
-    defaultConfig: TournamentConfiguration = undefined;
+    @ViewChild(LoadandresponseComponent, {static: false}) loadAndResponse: LoadandresponseComponent;
+
+    currentConfig: TournamentConfigurationDTO = {
+        name: '',
+        settings: new TournamentSettings(),
+        selectedPlayer: []
+    };
+
+    defaultConfig: TournamentConfigurationDTO = undefined;
     selectablePlayers: Player[] = [];
     selectedPlayer: Player[] = [];
+    playerSelectionPage = false;
+    tournamentModes: TournamentModeDTO[] = [];
 
-    constructor(private tournamentConfigurationService: TournamentconfigurationService, private playerService: PlayerService) { }
+    constructor(private tournamentConfigurationService: TournamentconfigurationService,
+                private playerService: PlayerService,
+                private tournamentService: TournamentService) { }
 
-    ngOnInit() {
+    ngOnInit() { }
+
+    onShow(): void {
+        console.log('On Show');
         this.tournamentConfigurationService.getDefaultConfig().subscribe(singleResponse => {
             this.defaultConfig = singleResponse.dtoValue;
         });
@@ -26,10 +44,23 @@ export class NewtournamentComponent implements OnInit {
         this.playerService.getAllPlayer().subscribe(listResponse => {
             this.selectablePlayers = Object.assign([], listResponse.dtoValueList);
         });
+
+        this.tournamentConfigurationService.getTournamentModes().subscribe(listResponse => {
+            this.tournamentModes = listResponse.dtoValueList;
+            this.currentConfig.settings.mode = this.tournamentModes[0].key;
+        });
     }
 
     arrayOne(n: number): any[] {
         return Array(n);
+    }
+
+    showPlayerSelectionPage(): void {
+        this.playerSelectionPage = true;
+    }
+
+    showTournamentSettingsPage(): void {
+        this.playerSelectionPage = false;
     }
 
     moveAllToRight() {
@@ -54,6 +85,50 @@ export class NewtournamentComponent implements OnInit {
         this.selectedPlayer.splice(playerIndex, 1);
 
         this.selectablePlayers.push(player);
+    }
+
+    onSubmit() {
+
+        this.completeConfig();
+        this.currentConfig.selectedPlayer.push(...this.selectedPlayer);
+        this.tournamentService.createNewTournament(this.currentConfig).subscribe(singleResponse => {
+            console.log(singleResponse.dtoStatus);
+        });
+    }
+
+    private completeConfig(): void {
+
+        if (this.currentConfig.settings.currentNoOfMatches === undefined) {
+            this.currentConfig.settings.currentNoOfMatches = this.defaultConfig.settings.currentNoOfMatches;
+        }
+
+        if (this.currentConfig.settings.goalsToWin === undefined) {
+            this.currentConfig.settings.goalsToWin = this.defaultConfig.settings.goalsToWin;
+        }
+
+        if (this.currentConfig.settings.matchesToWin === undefined) {
+            this.currentConfig.settings.matchesToWin = this.defaultConfig.settings.matchesToWin;
+        }
+
+        if (this.currentConfig.settings.minutesPerMatch === undefined) {
+            this.currentConfig.settings.minutesPerMatch = this.defaultConfig.settings.minutesPerMatch;
+        }
+
+        if (this.currentConfig.settings.pointsForDraw === undefined) {
+            this.currentConfig.settings.pointsForDraw = this.defaultConfig.settings.pointsForDraw;
+        }
+
+        if (this.currentConfig.settings.pointsForWinner === undefined) {
+            this.currentConfig.settings.pointsForWinner = this.defaultConfig.settings.pointsForWinner;
+        }
+
+        if (this.currentConfig.settings.randomRounds === undefined) {
+            this.currentConfig.settings.randomRounds = this.defaultConfig.settings.randomRounds;
+        }
+
+        if (this.currentConfig.settings.tableCount === undefined) {
+            this.currentConfig.settings.tableCount = this.defaultConfig.settings.tableCount;
+        }
     }
 
 }

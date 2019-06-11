@@ -7,79 +7,81 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form style="text-align: left">
+            <form #myform="ngForm" (ngSubmit)="onSubmit()" style="text-align: left">
                 <div class="modal-body">
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="!playerSelectionPage">
                         <div class="row">
                             <div class="col">
                                 <label for="tournamentName">Turniername</label>
-                                <input class="form-control" id="tournamentName" placeholder="Turniername" />
+                                <input class="form-control" [(ngModel)]="currentConfig.name" id="tournamentName" name="tournamentName" placeholder="Turniername"/>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="!playerSelectionPage">
                         <div class="row">
                             <div class="col">
                                 <label for="tournamentTables">Anzahl an Spieltischen</label>
-                                <input appOnlyNumber class="form-control" id="tournamentTables"
+                                <input appOnlyNumber [(ngModel)]="currentConfig.settings.tableCount" class="form-control" id="tournamentTables" name="tournamentTables"
                                     placeholder="{{defaultConfig?.settings.tableCount}}" />
                             </div>
                             <div class="col">
                                 <label for="tournamentRandomRounds">Zuf&auml;llige Runden</label>
-                                <input appOnlyNumber class="form-control" id="tournamentRandomRounds"
+                                <input appOnlyNumber [(ngModel)]="currentConfig.settings.randomRounds" class="form-control" id="tournamentRandomRounds" name="tournamentRandomRounds"
                                     placeholder="{{defaultConfig?.settings.randomRounds}}" />
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="!playerSelectionPage">
+                        <div class="row">
                             <div class="col">
                                 <label for="tournamentGamesToWin">Anzahl Spiele f&uuml;r Sieg</label>
-                                <input appOnlyNumber class="form-control" id="tournamentGamesToWin"
+                                <input appOnlyNumber [(ngModel)]="currentConfig.settings.matchesToWin" class="form-control" id="tournamentGamesToWin" name="tournamentGamesToWin"
                                     placeholder="{{defaultConfig?.settings.matchesToWin}}" />
                             </div>
                             <div class="col">
                                 <label for="tournamentGoalsToWin">Anzahl Tore f&uuml;r Sieg</label>
-                                <input appOnlyNumber class="form-control" id="tournamentGoalsToWin"
+                                <input appOnlyNumber [(ngModel)]="currentConfig.settings.goalsToWin" class="form-control" id="tournamentGoalsToWin" name="tournamentGoalsToWin"
                                     placeholder="{{defaultConfig?.settings.goalsToWin}}" />
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="!playerSelectionPage">
                         <div class="row">
                             <div class="col">
                                 <label for="tournamentMinutesPerGame">Minuten pro Spiel</label>
-                                <input appOnlyNumber class="form-control" id="tournamentMinutesPerGame"
+                                <input appOnlyNumber [(ngModel)]="currentConfig.settings.minutesPerMatch" class="form-control" id="tournamentMinutesPerGame" name="tournamentMinutesPerGame"
                                     placeholder="{{defaultConfig?.settings.minutesPerMatch}}" />
                             </div>
                             <div class="col">
                                 <label for="tournamentPointsToWin">Punkte Sieg</label>
-                                <input appOnlyNumber class="form-control" id="tournamentPointsToWin"
+                                <input appOnlyNumber [(ngModel)]="currentConfig.settings.pointsForWinner" class="form-control" id="tournamentPointsToWin" name="tournamentPointsToWin"
                                     placeholder="{{defaultConfig?.settings.pointsForWinner}}" />
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="!playerSelectionPage">
+                        <div class="row">
                             <div class="col">
                                 <label for="tournamentPointsForDraw">Punkte Unentschieden</label>
-                                <input appOnlyNumber class="form-control" id="tournamentPointsForDraw"
+                                <input appOnlyNumber [(ngModel)]="currentConfig.settings.pointsForDraw" class="form-control" id="tournamentPointsForDraw" name="tournamentPointsForDraw"
                                     placeholder="{{defaultConfig?.settings.pointsForDraw}}" />
                             </div>
                             <div class="col">
                                 <label for="tournamentMode">Turniermodus</label>
-                                <select class="form-control" id="tournamentMode">
-                                    <option></option>
+                                <select [(ngModel)]="currentConfig.settings.mode" class="form-control"  id="tournamentMode" name="tournamentMode">
+                                    <option [(ngValue)]="mode.key" *ngFor="let mode of tournamentModes; index as i">{{mode.displayName}}</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input type="checkbox" class="form-check-input" id="tournamentFixedTeams">
-                        <label class="form-check-label" for="tournamentFixedTeams">Feste Teams</label>
-                    </div>
-                    <br/>
-                    <br/>
-                    <div class="form-group">
-                        <h6>Spielerauswahl</h6>
+                    <div class="form-group" *ngIf="playerSelectionPage">
                         <div class="row">
                             <div class="col">
+                                <h6>Spielerauswahl</h6>
                                 <!-- <input type="text" class="form-control" placeholder="Filter" /> -->
                                 <button type="button" class="btn btn-light w-100"
                                     (click)="moveAllToRight()">&gt;&gt;</button>
-                                <div class="list-group" style="height: 200px; overflow-y: scroll">
+                                <div class="list-group" style="height: 350px; overflow-y: scroll">
                                     <button type="button" class="list-group-item list-group-item-action"
                                         *ngFor="let player of selectablePlayers" (click)="moveToRight(player)">
                                         {{player.firstName}} {{player.lastName}}
@@ -87,9 +89,10 @@
                                 </div>
                             </div>
                             <div class="col">
+                                <h6 style="text-align: center">Ausgew&auml;hlte Spieler</h6>
                                 <button type="button" class="btn btn-light w-100"
                                     (click)="moveAllToLeft()">&lt;&lt;</button>
-                                <div class="list-group" style="height: 200px; overflow-y: scroll">
+                                <div class="list-group" style="height: 350px; overflow-y: scroll" id="selectedPlayers" name="selectedPlayers">
                                     <button type="button" class="list-group-item list-group-item-action"
                                         *ngFor="let player of selectedPlayer" (click)="moveToLeft(player)">
                                         {{player.firstName}} {{player.lastName}}
@@ -98,10 +101,16 @@
                             </div>
                         </div>
                     </div>
+                    <div style="text-align: right" *ngIf="!playerSelectionPage"> 
+                        <button class="btn btn-primary" (click)="showPlayerSelectionPage()">Spielerauswahl -&gt;</button>
+                    </div>
+                    <div style="text-align: left" *ngIf="playerSelectionPage"> 
+                        <button class="btn btn-primary" (click)="showTournamentSettingsPage()">&lt;- Turniereinstellungen</button>
+                    </div>
                     <app-loadandresponse></app-loadandresponse>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Turnier erstellen</button>
+                    <button type="submit" class="btn btn-primary" *ngIf="playerSelectionPage">Turnier erstellen</button>
                     <button type="button" class="btn btn-secondary btn-block" style="width: 20%"
                         data-dismiss="modal">Abbrechen</button>
                 </div>

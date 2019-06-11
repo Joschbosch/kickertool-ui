@@ -1,8 +1,8 @@
 import { TournamentSettings } from './TournamentSettings';
 import { Player } from './Player';
 
-export class TournamentConfiguration {
-    name?: string;
+export class TournamentConfigurationDTO {
+    name: string;
     settings: TournamentSettings;
-    selectedPlayer?: Player[];
+    selectedPlayer: Player[];
 }

@@ -1,5 +1,5 @@
 import { DTO } from './DTO';
 
-export class SingeResponseDTO<T> extends DTO {
+export class SingleResponseDTO<T> extends DTO {
     dtoValue: T;
 }

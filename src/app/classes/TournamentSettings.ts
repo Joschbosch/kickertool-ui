@@ -7,6 +7,17 @@ export class TournamentSettings {
     minutesPerMatch: number;
     pointsForWinner: number;
     pointsForDraw: number;
-    fixedTeams: boolean;
     currentNoOfMatches: number;
+
+    constructor() {
+        this.mode = '';
+        this.tableCount = undefined;
+        this.randomRounds = undefined;
+        this.matchesToWin = undefined;
+        this.goalsToWin = undefined;
+        this.minutesPerMatch = undefined;
+        this.pointsForDraw = undefined;
+        this.pointsForWinner = undefined;
+        this.currentNoOfMatches = undefined;
+    }
 }

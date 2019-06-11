@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { NewtournamentComponent } from './newtournament/newtournament.component';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ParcIT Kickertool';
+
+    @ViewChild(NewtournamentComponent, {static: false}) newTournamentComponent: NewtournamentComponent;
+
+    title = 'ParcIT Kickertool';
+
+    onOpenNewTournamentClicked(): void {
+        this.newTournamentComponent.onShow();
+    }
 }
