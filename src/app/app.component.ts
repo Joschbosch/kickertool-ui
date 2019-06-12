@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NewtournamentComponent } from './newtournament/newtournament.component';
 
+// tslint:disable:indent
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

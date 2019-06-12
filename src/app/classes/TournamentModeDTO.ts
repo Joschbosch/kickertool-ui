@@ -1,6 +1,4 @@
-import { DTO } from './responses/DTO';
-
-export class TournamentModeDTO extends DTO {
+export class TournamentModeDTO {
     key?: string;
     displayName?: string;
 }

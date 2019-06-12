@@ -13,10 +13,7 @@ export class MainmenuComponent implements OnInit {
 
     constructor() { }
 
-  
-    ngOnInit() {
-  
-    }
+    ngOnInit() { }
 
     onOpenNewTournamentClicked(): void {
         this.newTournamentComponent.onShow();
