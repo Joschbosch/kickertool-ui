@@ -40,4 +40,11 @@ export class TournamentService {
 		return this.http.get<ListResponseDTO<PlayerRankingRow>>(this.tournamentUrl + '/getranking/' + uuid + '/' + roundNr);
 	}
 
+	pausePlayer(tournamendId: string, playerId: string): Observable<SingleResponseDTO<TournamentDTO>> {
+		return this.http.put<SingleResponseDTO<TournamentDTO>>(this.tournamentUrl + '/pauseplayer/' + tournamendId + '/' + playerId, {});
+	}
+
+	resumePlayer(tournamendId: string, playerId: string): Observable<SingleResponseDTO<TournamentDTO>> {
+		return this.http.put<SingleResponseDTO<TournamentDTO>>(this.tournamentUrl + '/unpauseplayer/' + tournamendId + '/' + playerId, {});
+	}
 }

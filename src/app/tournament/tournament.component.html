@@ -46,6 +46,7 @@
 					<th scope="col">Spieler</th>
 					<th scope="col">Punkte</th>
 					<th scope="col"></th>
+					<th scope="col"></th>
 				</thead>
 				<tbody>
 					<tr *ngFor="let rankingRow of playerRankingRows">
@@ -53,6 +54,13 @@
 						<td>{{rankingRow.player.firstName}} {{rankingRow.player.lastName}}</td>
 						<td>{{rankingRow.score}}</td>
 						<td><button type="button" class="btn btn-success" (click)="onDetailsClicked(rankingRow)" data-toggle="modal" data-target="#ranking-modal" data-backdrop="static">Details</button></td>
+						<td style="padding: 5px">
+							<div [hidden]="areEditButtonsHidden(rankingRow.player)">
+								<button class="btn btn-success" style="margin: 2px" (click)="onPlayerRemoveFromTournamentClicked(rankingRow.player)"><i class="fa fa-user-times"></i></button>
+								<button class="btn btn-success" style="margin: 2px" (click)="onPlayerPauseClicked(rankingRow.player)" [hidden]="isPlayerPausing(rankingRow.player)"><i class="fa fa-pause"></i></button>
+								<button class="btn btn-success" style="margin: 2px" (click)="onPlayerResumeClicked(rankingRow.player)" [hidden]="!isPlayerPausing(rankingRow.player)"><i class="fa fa-play"></i></button>
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>

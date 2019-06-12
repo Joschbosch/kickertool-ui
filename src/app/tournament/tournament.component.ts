@@ -5,6 +5,7 @@ import { TournamentDTO } from '../classes/TournamentDTO';
 import { MatchDTO } from '../classes/MatchDTO';
 import { PlayerRankingRow } from '../classes/PlayerRankingRow';
 import { MatchResultDTO } from '../classes/MatchResultDTO';
+import { Player } from '../classes/Player';
 
 // tslint:disable: indent
 @Component({
@@ -50,6 +51,30 @@ export class TournamentComponent implements OnInit {
 			}
 
 		});
+	}
+
+	areEditButtonsHidden(player: Player): boolean {
+		return player.dummyPlayer;
+	}
+
+	isPlayerPausing(player: Player): boolean {
+		return player.status === 'PAUSING_TOURNAMENT';
+	}
+
+	onPlayerRemoveFromTournamentClicked(player: Player): void {
+
+	}
+
+	onPlayerPauseClicked(player: Player): void {
+		this.tournamentService.pausePlayer(this.tournament.uid, player.uid).subscribe(repsonse => {
+			this.refresh(this.tournament.uid);
+		})
+	}
+
+	onPlayerResumeClicked(player: Player): void {
+		this.tournamentService.resumePlayer(this.tournament.uid, player.uid).subscribe(repsonse => {
+			this.refresh(this.tournament.uid);
+		})
 	}
 
 	enterMatchResultDisabled(): boolean {
