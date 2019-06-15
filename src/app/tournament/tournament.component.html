@@ -1,4 +1,5 @@
 <app-tournamentshow *ngIf="tournamentShowMode"></app-tournamentshow>
+<app-playeredit></app-playeredit>
 <div class="container-fluid" style="height: 100%; padding: 5%" *ngIf="!tournamentShowMode">
 	<div class="row align-items-center">
 		<div class="col-2"></div>
@@ -18,8 +19,11 @@
 				<option *ngFor="let item of arrayOne(tournament.currentRound); index as i" selected>Runde {{i + 1}}</option>
 			</select>
 		</div>
-		<div class="col-6">
+		<div class="col-4" style="text-align: left">
 			<h3>Tabelle</h3>
+		</div>
+		<div class="col-2" style="text-align: right">
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#playeredit-modal" data-backdrop="static" (click)="onOpenPlayerEditClicked()">Spieler hinzuf&uuml;gen</button>
 		</div>
 	</div>
 	<br />
@@ -157,7 +161,7 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary btn-block" data-dismiss="modal"
 					(click)="onMatchResultEnteredClicked()">Eintragen</button>
-				<button #modalMatchResultCloseButton type="button" class="btn btn-secondary btn-block"
+				<button type="button" class="btn btn-secondary btn-block"
 					style="width: 20%" data-dismiss="modal">Abbrechen</button>
 			</div>
 		</div>

@@ -19,6 +19,10 @@ export class PlayerService {
     return this.http.get<ListResponseDTO<Player>>(this.playerUrl + '/getall');
   }
 
+  getAllPlayerNotInTournament(tournamentId: string): Observable<ListResponseDTO<Player>> {
+	  return this.http.get<ListResponseDTO<Player>>(this.playerUrl + '/getall-not-in-tournament/' + tournamentId);
+  }
+
   insertNewPlayer(firstName: string, lastName: string): Observable<SingleResponseDTO<Player>> {
 
     const dummyPlayer: Player = {

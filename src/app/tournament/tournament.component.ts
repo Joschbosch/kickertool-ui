@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { TournamentService } from '../services/tournament.service';
 import { ActivatedRoute } from '@angular/router';
 import { TournamentDTO } from '../classes/TournamentDTO';
@@ -6,6 +6,8 @@ import { MatchDTO } from '../classes/MatchDTO';
 import { PlayerRankingRow } from '../classes/PlayerRankingRow';
 import { MatchResultDTO } from '../classes/MatchResultDTO';
 import { Player } from '../classes/Player';
+import { PlayerService } from '../services/player.service';
+import { PlayereditComponent } from '../playeredit/playeredit.component';
 
 // tslint:disable: indent
 @Component({
@@ -16,9 +18,10 @@ import { Player } from '../classes/Player';
 export class TournamentComponent implements OnInit {
 
 	@ViewChild('btnNewRound', { static: false }) btnNewRound: ElementRef;
-	@ViewChild('modalMatchResultCloseButton', { static: false }) modalMatchResultCloseButton: ElementRef;
+	@ViewChild(PlayereditComponent, {static: false}) playerEditComponent: PlayereditComponent;
 
 	myChannel = new BroadcastChannel('update');
+	refreshTournamentChannel = new BroadcastChannel('refreshTournament');
 
 	tournament: TournamentDTO;
 	matchesForRound: MatchDTO[] = [];
@@ -30,13 +33,16 @@ export class TournamentComponent implements OnInit {
 	tournamentShowMode = false;
 	tournamentShowURL: string = undefined;
 
-	constructor(private route: ActivatedRoute,
-				private tournamentService: TournamentService) { }
+	constructor(private zone: NgZone,
+				private route: ActivatedRoute,
+				private tournamentService: TournamentService,
+				private playerService: PlayerService) { }
 
 	ngOnInit() {
 		this.route.params.subscribe(params => {
 			this.refresh(params.uuid);
 		});
+		this.refreshTournamentChannel.onmessage = msg => this.refresh(this.tournament.uid);
 	}
 
 	arrayOne(n: number): any[] {
@@ -44,19 +50,20 @@ export class TournamentComponent implements OnInit {
 	}
 
 	private refresh(uuid: string): void {
-		this.tournamentService.getTournament(uuid).subscribe(singleResponse => {
-			this.tournament = singleResponse.dtoValue;
 
-			if (this.tournament.status === 'FINISHED') {
-				alert('Turnier ist vorbei!');
-			} else {
-				this.getPlayerRankings();
-				this.enableDisableNextRoundBtn();
-				this.refreshMatches(this.tournament.currentRound);
-				this.tournamentShowURL = 'http://localhost:4200/tournamentview/' + this.tournament.uid;
-			}
+		this.zone.run(() =>
+			this.tournamentService.getTournament(uuid).subscribe(singleResponse => {
+				this.tournament = singleResponse.dtoValue;
 
-		});
+				if (this.tournament.status === 'FINISHED') {
+					alert('Turnier ist vorbei!');
+				} else {
+					this.getPlayerRankings();
+					this.enableDisableNextRoundBtn();
+					this.refreshMatches(this.tournament.currentRound);
+					this.tournamentShowURL = 'http://localhost:4200/tournamentview/' + this.tournament.uid;
+				}
+		}));
 	}
 
 	areEditButtonsHidden(player: Player): boolean {
@@ -68,7 +75,9 @@ export class TournamentComponent implements OnInit {
 	}
 
 	onPlayerRemoveFromTournamentClicked(player: Player): void {
-
+		this.tournamentService.removePlayerFromTournament(this.tournament.uid, player.uid).subscribe(response => {
+			this.refresh(this.tournament.uid);
+		})
 	}
 
 	onPlayerPauseClicked(player: Player): void {
@@ -139,5 +148,9 @@ export class TournamentComponent implements OnInit {
 
 	onShowTournamentViewClicked(): void {
 		this.tournamentShowMode = true;
+	}
+
+	onOpenPlayerEditClicked(): void {
+		this.playerEditComponent.setTournamentMode(this.tournament.uid);
 	}
 }

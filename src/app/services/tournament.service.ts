@@ -8,6 +8,7 @@ import { StatusOnlyDTO } from '../classes/responses/StatusOnlyDTO';
 import { ListResponseDTO } from '../classes/responses/ListResponseDTO';
 import { PlayerRankingRow } from '../classes/PlayerRankingRow';
 import { MatchResultDTO } from '../classes/MatchResultDTO';
+import { Player } from '../classes/Player';
 
 // tslint:disable: indent
 @Injectable({
@@ -47,4 +48,11 @@ export class TournamentService {
 		return this.http.put<SingleResponseDTO<TournamentDTO>>(this.tournamentUrl + '/unpauseplayer/' + tournamendId + '/' + playerId, {});
 	}
 
+	removePlayerFromTournament(tournamendId: string, playerId: string): Observable<ListResponseDTO<Player>> {
+		return this.http.delete<ListResponseDTO<Player>>(this.tournamentUrl + '/removeplayer/' + tournamendId + '/' + playerId);
+	}
+
+	addPlayer(tournamentId: string, playerId: string): Observable<ListResponseDTO<Player>> {
+		return this.http.put<ListResponseDTO<Player>>(this.tournamentUrl + '/addplayer/' + tournamentId + '/' + playerId, {});
+	}
 }

@@ -12,26 +12,31 @@
                     <thead class="thead-kickertool">
                         <th scope="col">Vorname</th>
                         <th scope="col">Nachname</th>
-                        <th scopr="col" style="width: 20%"></th>
+						<th scopr="col" style="width: 20%" *ngIf="!tournamentMode"></th>
+						<th scopr="col" *ngIf="tournamentMode">Teilnahme am Turnier</th>
                     </thead>
                     <tbody>
                         <tr scope="row" *ngFor="let player of players">
                             <td style="text-align: left">{{player.firstName}}</td>
                             <td style="text-align: left">{{player.lastName}}</td>
-                            <td><i class="fa fa-user-times" (click)="deletePlayer(player)" style="cursor: pointer"></i></td>
+							<td *ngIf="!tournamentMode"><i class="fa fa-user-times" (click)="deletePlayer(player)" style="cursor: pointer"></i></td>
+							<td *ngIf="tournamentMode">
+								<input class="form-check-input" type="checkbox" id="tournamentSelection" [(ngModel)]="player.selectedForTournament">
+							</td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="input-group">
                     <input #newplayername (keyup.enter)="addPlayer(newplayername.value)" type="text" class="form-control" placeholder="Neuer Spielername" style="width: 80%">
                     <div class="input-group-append" style="width: 20%">
-                        <button type="button" class="btn btn-kickertool-green btn-block" (click)="addPlayer(newplayername.value)">Hinzuf&uuml;gen</button>
+                        <button type="button" class="btn btn-kickertool-green btn-block" (click)="addPlayer(newplayername.value)">Anlegen</button>
                     </div>
                 </div>
                 <app-loadandresponse></app-loadandresponse>
             </div>
             <div class="modal-footer" >
-                <button type="button" class="btn btn-secondary btn-block" style="width: 20%" data-dismiss="modal">Schlie&szlig;en</button>
+				<button *ngIf="tournamentMode" type="button" class="btn btn-primary" (click)="onAddPlayerToTournamendClicked()">Zum Turnier hinzuf&uuml;gen</button>
+                <button #playerEditModalCloseButton type="button" class="btn btn-secondary" data-dismiss="modal">Schlie&szlig;en</button>
             </div>
         </div>
     </div>

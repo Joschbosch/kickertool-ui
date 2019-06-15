@@ -4,4 +4,6 @@ export class Player {
 	lastName: string;
 	status: string;
 	dummyPlayer: boolean;
+	selectedForTournament?: boolean;
+
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { TournamentDTO } from '../classes/TournamentDTO';
 
+// tslint:disable: indent
 @Component({
   selector: 'app-tournamentshow',
   templateUrl: './tournamentshow.component.html',

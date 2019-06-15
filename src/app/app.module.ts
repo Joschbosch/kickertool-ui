@@ -12,6 +12,7 @@ import { OnlynumberDirective } from './classes/directives/onlynumber.directive';
 import { TournamentComponent } from './tournament/tournament.component';
 import { MainmenuComponent } from './mainmenu/mainmenu.component';
 import { TournamentshowComponent } from './tournamentshow/tournamentshow.component';
+import { StopwatchComponent } from './stopwatch/stopwatch.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TournamentshowComponent } from './tournamentshow/tournamentshow.compone
     OnlynumberDirective,
     TournamentComponent,
     MainmenuComponent,
-    TournamentshowComponent
+    TournamentshowComponent,
+    StopwatchComponent
   ],
   imports: [
     BrowserModule,
