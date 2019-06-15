@@ -11,7 +11,10 @@
 		</div>
 	</div>
 	<div class="row align-items-center">
-		<div class="col-3" style="text-align: left">
+		<div class="col-2">
+			<app-stopwatch></app-stopwatch>
+		</div>
+		<div class="col-2" style="text-align: left">
 			<button #btnNewRound type="button" class="btn btn-primary" (click)="onNewRoundClicked()">Neue Runde starten</button>
 		</div>
 		<div class="col-3">
@@ -19,16 +22,18 @@
 				<option *ngFor="let item of arrayOne(tournament.currentRound); index as i" selected>Runde {{i + 1}}</option>
 			</select>
 		</div>
-		<div class="col-4" style="text-align: left">
-			<h3>Tabelle</h3>
-		</div>
-		<div class="col-2" style="text-align: right">
+		<div class="col-5" style="text-align: right">
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#playeredit-modal" data-backdrop="static" (click)="onOpenPlayerEditClicked()">Spieler hinzuf&uuml;gen</button>
 		</div>
 	</div>
 	<br />
 	<div class="row">
-		<div class="col-6">
+		<div class="col-2">
+			<button type="button" class="btn btn-primary" (click)="onResetStopwatchClicked()" [disabled]="!stopWatchComponent?.running"><i class="fa fa-step-backward"></i></button>
+			<button type="button" class="btn btn-primary" (click)="onStartStopwatchClicked()"><i class="fa fa-play"></i></button>
+			<button type="button" class="btn btn-primary" (click)="onPauseStopwatchClicked()" [disabled]="!stopWatchComponent?.running"><i class="fa fa-pause"></i></button>
+		</div>
+		<div class="col-5">
 			<table class="table table-sm table-bordered table-striped">
 				<thead class="thead-kickertool">
 					<th scope="col">Team 1</th>
@@ -48,7 +53,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="col-6">
+		<div class="col-5">
 			<table class="table table-sm table-bordered table-striped">
 				<thead class="thead-kickertool">
 					<th scope="col">#</th>

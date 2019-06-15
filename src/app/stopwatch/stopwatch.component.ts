@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
+import * as joda from 'js-joda';
+import { Globals } from '../classes/globals/Globals';
 
 // tslint:disable: indent
 @Component({
@@ -10,10 +12,54 @@ export class StopwatchComponent implements OnInit {
 
 	stopwatchChannel = new BroadcastChannel('stopwatch');
 	running = false;
+	stopwatch = joda.LocalTime.of(0, 5, 0, 0);
+	stopwatchString = this.stopwatch.format(joda.DateTimeFormatter.ofPattern(Globals.TIME_FORMAT));
+	private timer;
 
-  constructor() { }
+	constructor(private zone: NgZone) { }
 
-  ngOnInit() {
-  }
+	ngOnInit() {
+		this.stopwatchChannel.onmessage = msg => this.translateMessage(msg.data);
+	}
+
+	private translateMessage(msg: string): void {
+		if (msg === 'start') {
+			this.startStopwatch();
+		}
+
+		if (msg === 'pause') {
+			this.pauseStopwatch();
+		}
+
+		if (msg === 'reset') {
+			this.resetStopwatch();
+		}
+	}
+
+	private startStopwatch(): void {
+		this.running = true;
+		this.zone.run(() =>
+			this.timer = setInterval(() => {
+				this.stopwatch = this.stopwatch.minusNanos(100000000);
+				this.stopwatchString = this.stopwatch.format(joda.DateTimeFormatter.ofPattern(Globals.TIME_FORMAT));
+			}, 100)
+		);
+	}
+
+	private pauseStopwatch(): void {
+		if (this.running) {
+			clearInterval(this.timer);
+		}
+	}
+
+	private resetStopwatch(): void {
+		if (this.running) {
+			this.running = false;
+			this.zone.run(() => {
+				this.stopwatch = joda.LocalTime.of(0, 5, 0, 0);
+				this.stopwatchString = this.stopwatch.format(joda.DateTimeFormatter.ofPattern(Globals.TIME_FORMAT));
+			});
+		}
+	}
 
 }

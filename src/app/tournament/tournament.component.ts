@@ -6,8 +6,8 @@ import { MatchDTO } from '../classes/MatchDTO';
 import { PlayerRankingRow } from '../classes/PlayerRankingRow';
 import { MatchResultDTO } from '../classes/MatchResultDTO';
 import { Player } from '../classes/Player';
-import { PlayerService } from '../services/player.service';
 import { PlayereditComponent } from '../playeredit/playeredit.component';
+import { StopwatchComponent } from '../stopwatch/stopwatch.component';
 
 // tslint:disable: indent
 @Component({
@@ -19,9 +19,11 @@ export class TournamentComponent implements OnInit {
 
 	@ViewChild('btnNewRound', { static: false }) btnNewRound: ElementRef;
 	@ViewChild(PlayereditComponent, {static: false}) playerEditComponent: PlayereditComponent;
+	@ViewChild(StopwatchComponent, {static: false}) stopWatchComponent: StopwatchComponent;
 
 	myChannel = new BroadcastChannel('update');
 	refreshTournamentChannel = new BroadcastChannel('refreshTournament');
+	stopwatchChannel = new BroadcastChannel('stopwatch');
 
 	tournament: TournamentDTO;
 	matchesForRound: MatchDTO[] = [];
@@ -34,15 +36,14 @@ export class TournamentComponent implements OnInit {
 	tournamentShowURL: string = undefined;
 
 	constructor(private zone: NgZone,
-				private route: ActivatedRoute,
-				private tournamentService: TournamentService,
-				private playerService: PlayerService) { }
+				         private route: ActivatedRoute,
+				         private tournamentService: TournamentService) { }
 
 	ngOnInit() {
 		this.route.params.subscribe(params => {
 			this.refresh(params.uuid);
 		});
-		this.refreshTournamentChannel.onmessage = msg => this.refresh(this.tournament.uid);
+		this.refreshTournamentChannel.onmessage = () => this.refresh(this.tournament.uid);
 	}
 
 	arrayOne(n: number): any[] {
@@ -75,21 +76,21 @@ export class TournamentComponent implements OnInit {
 	}
 
 	onPlayerRemoveFromTournamentClicked(player: Player): void {
-		this.tournamentService.removePlayerFromTournament(this.tournament.uid, player.uid).subscribe(response => {
+		this.tournamentService.removePlayerFromTournament(this.tournament.uid, player.uid).subscribe(() => {
 			this.refresh(this.tournament.uid);
-		})
+		});
 	}
 
 	onPlayerPauseClicked(player: Player): void {
-		this.tournamentService.pausePlayer(this.tournament.uid, player.uid).subscribe(repsonse => {
+		this.tournamentService.pausePlayer(this.tournament.uid, player.uid).subscribe(() => {
 			this.refresh(this.tournament.uid);
-		})
+		});
 	}
 
 	onPlayerResumeClicked(player: Player): void {
-		this.tournamentService.resumePlayer(this.tournament.uid, player.uid).subscribe(repsonse => {
+		this.tournamentService.resumePlayer(this.tournament.uid, player.uid).subscribe(() => {
 			this.refresh(this.tournament.uid);
-		})
+		});
 	}
 
 	enterMatchResultDisabled(): boolean {
@@ -132,7 +133,7 @@ export class TournamentComponent implements OnInit {
 	}
 
 	onMatchResultEnteredClicked(): void {
-		this.tournamentService.enterOrChangeMatchResult(this.tournament.uid, this.matchResult).subscribe(statusOnly => {
+		this.tournamentService.enterOrChangeMatchResult(this.tournament.uid, this.matchResult).subscribe(() => {
 			this.refresh(this.tournament.uid);
 		});
 	}
@@ -152,5 +153,17 @@ export class TournamentComponent implements OnInit {
 
 	onOpenPlayerEditClicked(): void {
 		this.playerEditComponent.setTournamentMode(this.tournament.uid);
+	}
+
+	onStartStopwatchClicked(): void {
+		this.stopwatchChannel.postMessage('start');
+	}
+
+	onPauseStopwatchClicked(): void {
+		this.stopwatchChannel.postMessage('pause');
+	}
+
+	onResetStopwatchClicked(): void {
+		this.stopwatchChannel.postMessage('reset');
 	}
 }
