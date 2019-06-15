@@ -78,3 +78,12 @@ h3 {
 	background-color: var(--green);
 	color: #fff;
 }
+
+.my-custom-scrollbar {
+	position: relative;
+	height: 450px;
+	overflow: auto;
+}
+.table-wrapper-scroll-y {
+	display: block;
+}

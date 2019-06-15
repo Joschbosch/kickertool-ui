@@ -78,7 +78,6 @@
                         <div class="row">
                             <div class="col">
                                 <h6>Spielerauswahl</h6>
-                                <!-- <input type="text" class="form-control" placeholder="Filter" /> -->
                                 <button type="button" class="btn btn-light w-100"
                                     (click)="moveAllToRight()">&gt;&gt;</button>
                                 <div class="list-group" style="height: 350px; overflow-y: scroll">
@@ -101,10 +100,10 @@
                             </div>
                         </div>
                     </div>
-                    <div style="text-align: right" *ngIf="!playerSelectionPage"> 
+                    <div style="text-align: right" *ngIf="!playerSelectionPage">
                         <button class="btn btn-primary" (click)="showPlayerSelectionPage()">Spielerauswahl -&gt;</button>
                     </div>
-                    <div style="text-align: left" *ngIf="playerSelectionPage"> 
+                    <div style="text-align: left" *ngIf="playerSelectionPage">
                         <button class="btn btn-primary" (click)="showTournamentSettingsPage()">&lt;- Turniereinstellungen</button>
                     </div>
                     <app-loadandresponse></app-loadandresponse>
