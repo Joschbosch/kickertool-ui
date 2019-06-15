@@ -18,12 +18,17 @@ export class TournamentComponent implements OnInit {
 	@ViewChild('btnNewRound', { static: false }) btnNewRound: ElementRef;
 	@ViewChild('modalMatchResultCloseButton', { static: false }) modalMatchResultCloseButton: ElementRef;
 
+	myChannel = new BroadcastChannel('update');
+
 	tournament: TournamentDTO;
 	matchesForRound: MatchDTO[] = [];
 	selectedMatch: MatchDTO = undefined;
 	playerRankingRows: PlayerRankingRow[] = [];
 	selectedRankingRow: PlayerRankingRow = undefined;
 	matchResult: MatchResultDTO = undefined;
+
+	tournamentShowMode = false;
+	tournamentShowURL: string = undefined;
 
 	constructor(private route: ActivatedRoute,
 				private tournamentService: TournamentService) { }
@@ -48,6 +53,7 @@ export class TournamentComponent implements OnInit {
 				this.getPlayerRankings();
 				this.enableDisableNextRoundBtn();
 				this.refreshMatches(this.tournament.currentRound);
+				this.tournamentShowURL = 'http://localhost:4200/tournamentview/' + this.tournament.uid;
 			}
 
 		});
@@ -128,6 +134,10 @@ export class TournamentComponent implements OnInit {
 
 	onRoundSelect(index: string): void {
 		this.refreshMatches(parseInt(index.split(' ')[1], 10));
+		this.myChannel.postMessage('Round ' + index);
 	}
 
+	onShowTournamentViewClicked(): void {
+		this.tournamentShowMode = true;
+	}
 }

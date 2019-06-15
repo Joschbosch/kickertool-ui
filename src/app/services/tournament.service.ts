@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { TournamentConfigurationDTO } from '../classes/TournamentConfigurationDTO';
 import { SingleResponseDTO } from '../classes/responses/SingleResponseDTO';
 import { TournamentDTO } from '../classes/TournamentDTO';
-import { MatchDTO } from '../classes/MatchDTO';
 import { StatusOnlyDTO } from '../classes/responses/StatusOnlyDTO';
 import { ListResponseDTO } from '../classes/responses/ListResponseDTO';
 import { PlayerRankingRow } from '../classes/PlayerRankingRow';
@@ -47,4 +46,5 @@ export class TournamentService {
 	resumePlayer(tournamendId: string, playerId: string): Observable<SingleResponseDTO<TournamentDTO>> {
 		return this.http.put<SingleResponseDTO<TournamentDTO>>(this.tournamentUrl + '/unpauseplayer/' + tournamendId + '/' + playerId, {});
 	}
+
 }

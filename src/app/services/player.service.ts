@@ -23,7 +23,9 @@ export class PlayerService {
 
     const dummyPlayer: Player = {
         firstName,
-        lastName
+		lastName,
+		status: undefined,
+		dummyPlayer: false
     };
 
     return this.http.post<SingleResponseDTO<Player>>(this.playerUrl, dummyPlayer);
