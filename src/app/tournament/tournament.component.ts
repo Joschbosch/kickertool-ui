@@ -8,6 +8,7 @@ import { MatchResultDTO } from '../classes/MatchResultDTO';
 import { Player } from '../classes/Player';
 import { PlayereditComponent } from '../playeredit/playeredit.component';
 import { StopwatchComponent } from '../stopwatch/stopwatch.component';
+import { TournamentShowDTO } from '../classes/TournamentShowDTO';
 
 // tslint:disable: indent
 @Component({
@@ -21,7 +22,7 @@ export class TournamentComponent implements OnInit {
 	@ViewChild(PlayereditComponent, {static: false}) playerEditComponent: PlayereditComponent;
 	@ViewChild(StopwatchComponent, {static: false}) stopWatchComponent: StopwatchComponent;
 
-	myChannel = new BroadcastChannel('update');
+	tournamentShowChannel = new BroadcastChannel('tournamentShow');
 	refreshTournamentChannel = new BroadcastChannel('refreshTournament');
 	stopwatchChannel = new BroadcastChannel('stopwatch');
 
@@ -64,7 +65,23 @@ export class TournamentComponent implements OnInit {
 					this.refreshMatches(this.tournament.currentRound);
 					this.tournamentShowURL = 'http://localhost:4200/tournamentview/' + this.tournament.uid;
 				}
+
+				this.broadcastTournamentShow();
+
 		}));
+	}
+
+	private broadcastTournamentShow(): void {
+
+		const matches = this.getMatchesForRound(this.tournament.currentRound);
+
+		const tournamentShowDTO: TournamentShowDTO = {
+			tournament: this.tournament,
+			matches,
+			rankings: this.playerRankingRows
+		};
+
+		this.tournamentShowChannel.postMessage(tournamentShowDTO);
 	}
 
 	areEditButtonsHidden(player: Player): boolean {
@@ -99,7 +116,11 @@ export class TournamentComponent implements OnInit {
 
 	private refreshMatches(round: number): void {
 		this.matchesForRound = [];
-		this.matchesForRound.push(...this.tournament.matches.filter((match: MatchDTO) => match.roundNumber === round));
+		this.matchesForRound.push(...this.getMatchesForRound(round));
+	}
+
+	private getMatchesForRound(round: number): MatchDTO[] {
+		return this.tournament.matches.filter((match: MatchDTO) => match.roundNumber === round);
 	}
 
 	private enableDisableNextRoundBtn(): void {
@@ -144,7 +165,6 @@ export class TournamentComponent implements OnInit {
 
 	onRoundSelect(index: string): void {
 		this.refreshMatches(parseInt(index.split(' ')[1], 10));
-		this.myChannel.postMessage('Round ' + index);
 	}
 
 	onShowTournamentViewClicked(): void {

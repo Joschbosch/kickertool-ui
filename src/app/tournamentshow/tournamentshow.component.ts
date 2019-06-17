@@ -1,5 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { TournamentDTO } from '../classes/TournamentDTO';
+import { TournamentShowDTO } from '../classes/TournamentShowDTO';
 
 // tslint:disable: indent
 @Component({
@@ -9,16 +10,15 @@ import { TournamentDTO } from '../classes/TournamentDTO';
 })
 export class TournamentshowComponent implements OnInit {
 
-	myChannel = new BroadcastChannel('update');
-	roundName: string = '';
+	tournamentShowChannel = new BroadcastChannel('tournamentShow');
+	tournamentShowDTO: TournamentShowDTO = undefined;
 
 	constructor(private zone: NgZone) {
-		this.roundName = 'Lets see';
-		this.myChannel.onmessage = msg => this.updateRoundName(msg.data);
+		this.tournamentShowChannel.onmessage = msg => this.updateTournamentShowView(msg.data);
 	}
 
-	updateRoundName(msg: string) {
-		this.zone.run(() => this.roundName = msg);
+	updateTournamentShowView(tournamentShowDTO: TournamentShowDTO) {
+		this.zone.run(() => this.tournamentShowDTO = tournamentShowDTO);
 	}
 
 	ngOnInit() { }

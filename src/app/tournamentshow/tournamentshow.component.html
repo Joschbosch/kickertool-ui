@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row" *ngIf="tournamentShowDTO">
 	<div class="col-6">
-		<h1>Name: {{roundName}}</h1>
+		<h1>{{tournamentShowDTO.tournament.name}}</h1>
 		<app-stopwatch></app-stopwatch>
 		<!-- <table class="table table-sm table-bordered table-striped">
 			<thead class="thead-kickertool">

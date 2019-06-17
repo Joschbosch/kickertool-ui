@@ -12,6 +12,7 @@ export class StopwatchComponent implements OnInit {
 
 	stopwatchChannel = new BroadcastChannel('stopwatch');
 	running = false;
+	paused = false;
 	stopwatch = joda.LocalTime.of(0, 5, 0, 0);
 	stopwatchString = this.stopwatch.format(joda.DateTimeFormatter.ofPattern(Globals.TIME_FORMAT));
 	private timer;
@@ -37,6 +38,11 @@ export class StopwatchComponent implements OnInit {
 	}
 
 	private startStopwatch(): void {
+
+		if (this.running && !this.paused) {
+			return;
+		}
+
 		this.running = true;
 		this.zone.run(() =>
 			this.timer = setInterval(() => {
@@ -49,12 +55,14 @@ export class StopwatchComponent implements OnInit {
 	private pauseStopwatch(): void {
 		if (this.running) {
 			clearInterval(this.timer);
+			this.paused = true;
 		}
 	}
 
 	private resetStopwatch(): void {
 		if (this.running) {
 			this.running = false;
+			this.paused = false;
 			this.zone.run(() => {
 				this.stopwatch = joda.LocalTime.of(0, 5, 0, 0);
 				this.stopwatchString = this.stopwatch.format(joda.DateTimeFormatter.ofPattern(Globals.TIME_FORMAT));
