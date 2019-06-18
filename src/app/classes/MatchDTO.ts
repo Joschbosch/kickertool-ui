@@ -1,5 +1,4 @@
 import { TeamDTO } from './TeamDTO';
-import { GameTableDTO } from './GameTableDTO';
 
 export class MatchDTO {
 
@@ -10,6 +9,6 @@ export class MatchDTO {
 	status: string;
 	homeTeam: TeamDTO;
 	visitingTeam: TeamDTO;
-	table: GameTableDTO;
+	gameTableDescription: string;
 
 }

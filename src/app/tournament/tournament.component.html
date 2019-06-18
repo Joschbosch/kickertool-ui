@@ -12,7 +12,7 @@
 	</div>
 	<div class="row align-items-center">
 		<div class="col-2">
-			<app-stopwatch></app-stopwatch>
+			<p class="stopwatch"><app-stopwatch></app-stopwatch></p>
 		</div>
 		<div class="col-2" style="text-align: left">
 			<button #btnNewRound type="button" class="btn btn-primary" (click)="onNewRoundClicked()">Neue Runde starten</button>
@@ -29,9 +29,9 @@
 	<br />
 	<div class="row">
 		<div class="col-2">
-			<button type="button" class="btn btn-primary" (click)="onResetStopwatchClicked()" [disabled]="!stopWatchComponent?.running"><i class="fa fa-step-backward"></i></button>
-			<button type="button" class="btn btn-primary" (click)="onStartStopwatchClicked()"><i class="fa fa-play"></i></button>
-			<button type="button" class="btn btn-primary" (click)="onPauseStopwatchClicked()" [disabled]="!stopWatchComponent?.running"><i class="fa fa-pause"></i></button>
+			<button type="button" style="margin-right: 5px" class="btn btn-primary" (click)="onResetStopwatchClicked()" [disabled]="!stopWatchComponent?.running"><i class="fa fa-step-backward"></i></button>
+			<button type="button" style="margin-right: 5px" class="btn btn-primary" (click)="onStartStopwatchClicked()"><i class="fa fa-play"></i></button>
+			<button type="button" style="margin-right: 5px" class="btn btn-primary" (click)="onPauseStopwatchClicked()" [disabled]="!stopWatchComponent?.running"><i class="fa fa-pause"></i></button>
 		</div>
 		<div class="col-5">
 			<table class="table table-sm table-bordered table-striped">
@@ -47,7 +47,7 @@
 						<td>{{match.homeTeam.player1.firstName}} {{match.homeTeam.player1.lastName}}<br />{{match.homeTeam.player2.firstName}} {{match.homeTeam.player2.lastName}}</td>
 						<td>{{match.scoreHome}} : {{match.scoreVisiting}}</td>
 						<td>{{match.visitingTeam.player1.firstName}} {{match.visitingTeam.player1.lastName}}<br />{{match.visitingTeam.player2.firstName}} {{match.visitingTeam.player2.lastName}}</td>
-						<td>{{match.table?.tableNumber}}</td>
+						<td>{{match.gameTableDescription}}</td>
 						<td><button type="button" class="btn btn-success" (click)="onEnterMatchResultClicked(match)" data-toggle="modal" data-target="#match-result-modal" data-backdrop="static" [disabled]="enterMatchResultDisabled()">Ergebnis</button></td>
 					</tr>
 				</tbody>

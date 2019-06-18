@@ -52,7 +52,7 @@ export class TournamentService {
 		return this.http.delete<ListResponseDTO<Player>>(this.tournamentUrl + '/removeplayer/' + tournamendId + '/' + playerId);
 	}
 
-	addPlayer(tournamentId: string, playerId: string): Observable<ListResponseDTO<Player>> {
-		return this.http.put<ListResponseDTO<Player>>(this.tournamentUrl + '/addplayer/' + tournamentId + '/' + playerId, {});
+	addPlayer(tournamentId: string, playerIds: string[]): Observable<ListResponseDTO<Player>> {
+		return this.http.put<ListResponseDTO<Player>>(this.tournamentUrl + '/addplayers/' + tournamentId + '/', {playerIds});
 	}
 }

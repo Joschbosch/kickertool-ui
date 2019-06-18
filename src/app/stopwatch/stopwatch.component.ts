@@ -43,6 +43,7 @@ export class StopwatchComponent implements OnInit {
 			return;
 		}
 
+		clearInterval(this.timer);
 		this.running = true;
 		this.zone.run(() =>
 			this.timer = setInterval(() => {
@@ -63,6 +64,7 @@ export class StopwatchComponent implements OnInit {
 		if (this.running) {
 			this.running = false;
 			this.paused = false;
+			clearInterval(this.timer);
 			this.zone.run(() => {
 				this.stopwatch = joda.LocalTime.of(0, 5, 0, 0);
 				this.stopwatchString = this.stopwatch.format(joda.DateTimeFormatter.ofPattern(Globals.TIME_FORMAT));

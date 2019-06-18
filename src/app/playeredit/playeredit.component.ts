@@ -77,19 +77,14 @@ export class PlayereditComponent implements OnInit {
 	}
 
 	onAddPlayerToTournamendClicked(): void {
-		const selectedPlayers = this.players.filter((player: Player) => player.selectedForTournament);
+		const selectedPlayerIds = this.players.filter((player: Player) => player.selectedForTournament).map((player: Player) => player.uid);
 		this.loadAndResponse.showLoadingSpinner();
-		for (let index = 0; index < selectedPlayers.length; index++) {
-			const player = selectedPlayers[index];
-			this.tournamentService.addPlayer(this.tournamendId, player.uid).subscribe(response => {
-				if (index === (selectedPlayers.length - 1)) {
-					this.loadAndResponse.hideLoadingSpinner();
-					this.getAllPlayer();
-					this.playerEditModalCloseButton.nativeElement.click();
-					this.refreshTournamentChannel.postMessage('');
-				}
-			});
-		}
+		this.tournamentService.addPlayer(this.tournamendId, selectedPlayerIds).subscribe(response => {
+				this.loadAndResponse.hideLoadingSpinner();
+				this.getAllPlayer();
+				this.playerEditModalCloseButton.nativeElement.click();
+				this.refreshTournamentChannel.postMessage('');
+		});
 	}
 
 }

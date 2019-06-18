@@ -136,6 +136,7 @@ export class TournamentComponent implements OnInit {
 	getPlayerRankings() {
 		this.tournamentService.getPlayerRankings(this.tournament.uid, this.tournament.currentRound).subscribe(listResponse => {
 			this.playerRankingRows = listResponse.dtoValueList;
+			this.broadcastTournamentShow();
 		});
 	}
 
@@ -145,6 +146,7 @@ export class TournamentComponent implements OnInit {
 			this.tournament = singleResponse.dtoValue;
 			this.refreshMatches(this.tournament.currentRound);
 			this.getPlayerRankings();
+			this.broadcastTournamentShow();
 		});
 	}
 
