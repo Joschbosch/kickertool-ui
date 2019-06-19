@@ -7,15 +7,20 @@
 			<h1>{{tournament.name}}</h1>
 		</div>
 		<div class="col-2" style="text-align: right">
-			<a href="{{tournamentShowURL}}" target="_blank" (click)="onShowTournamentViewClicked()">Zeige Turnierfenster</a>
+			<a href="{{tournamentShowURL}}" target="_blank" (click)="onShowTournamentViewClicked()" style="color: #fff">Zeige Turnierfenster</a>
 		</div>
+	</div>
+	<div class="row align-items-center">
+		<div class="col-2"></div>
+		<div class="col-8"><button type="button" class="btn btn-kickertool" (click)="onFinishTournamentClicked()">Turnier beenden</button></div>
+		<div class="col-2"></div>
 	</div>
 	<div class="row align-items-center">
 		<div class="col-2">
 			<p class="stopwatch"><app-stopwatch></app-stopwatch></p>
 		</div>
 		<div class="col-2" style="text-align: left">
-			<button #btnNewRound type="button" class="btn btn-primary" (click)="onNewRoundClicked()">Neue Runde starten</button>
+			<button #btnNewRound type="button" class="btn btn-kickertool" (click)="onNewRoundClicked()">Neue Runde starten</button>
 		</div>
 		<div class="col-3">
 			<select class="form-control" (change)="onRoundSelect($event.target.value)" *ngIf="tournament">
@@ -23,17 +28,17 @@
 			</select>
 		</div>
 		<div class="col-5" style="text-align: right">
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#playeredit-modal" data-backdrop="static" (click)="onOpenPlayerEditClicked()">Spieler hinzuf&uuml;gen</button>
+			<button type="button" class="btn btn-kickertool" data-toggle="modal" data-target="#playeredit-modal" data-backdrop="static" (click)="onOpenPlayerEditClicked()">Spieler hinzuf&uuml;gen</button>
 		</div>
 	</div>
 	<br />
 	<div class="row">
 		<div class="col-2">
-			<button type="button" style="margin-right: 5px" class="btn btn-primary" (click)="onResetStopwatchClicked()" [disabled]="!stopWatchComponent?.running"><i class="fa fa-step-backward"></i></button>
-			<button type="button" style="margin-right: 5px" class="btn btn-primary" (click)="onStartStopwatchClicked()"><i class="fa fa-play"></i></button>
-			<button type="button" style="margin-right: 5px" class="btn btn-primary" (click)="onPauseStopwatchClicked()" [disabled]="!stopWatchComponent?.running"><i class="fa fa-pause"></i></button>
+			<button type="button" style="margin-right: 5px" class="btn btn-kickertool" (click)="onResetStopwatchClicked()" [disabled]="!stopWatchComponent?.running"><i class="fa fa-step-backward"></i></button>
+			<button type="button" style="margin-right: 5px" class="btn btn-kickertool" (click)="onStartStopwatchClicked()"><i class="fa fa-play"></i></button>
+			<button type="button" style="margin-right: 5px" class="btn btn-kickertool" (click)="onPauseStopwatchClicked()" [disabled]="!stopWatchComponent?.running"><i class="fa fa-pause"></i></button>
 		</div>
-		<div class="col-5">
+		<div class="col-5 table-wrapper-scroll-y my-custom-scrollbar">
 			<table class="table table-sm table-bordered table-striped">
 				<thead class="thead-kickertool">
 					<th scope="col">Team 1</th>
@@ -48,7 +53,7 @@
 						<td>{{match.scoreHome}} : {{match.scoreVisiting}}</td>
 						<td>{{match.visitingTeam.player1.firstName}} {{match.visitingTeam.player1.lastName}}<br />{{match.visitingTeam.player2.firstName}} {{match.visitingTeam.player2.lastName}}</td>
 						<td>{{match.gameTableDescription}}</td>
-						<td><button type="button" class="btn btn-success" (click)="onEnterMatchResultClicked(match)" data-toggle="modal" data-target="#match-result-modal" data-backdrop="static" [disabled]="enterMatchResultDisabled()">Ergebnis</button></td>
+						<td><button type="button" class="btn btn-kickertool-green" (click)="onEnterMatchResultClicked(match)" data-toggle="modal" data-target="#match-result-modal" data-backdrop="static" [disabled]="enterMatchResultDisabled()">Ergebnis</button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -67,12 +72,12 @@
 						<td>{{rankingRow.rank}}</td>
 						<td>{{rankingRow.player.firstName}} {{rankingRow.player.lastName}}</td>
 						<td>{{rankingRow.score}}</td>
-						<td><button type="button" class="btn btn-success" (click)="onDetailsClicked(rankingRow)" data-toggle="modal" data-target="#ranking-modal" data-backdrop="static">Details</button></td>
+						<td><button type="button" class="btn btn-kickertool-green" (click)="onDetailsClicked(rankingRow)" data-toggle="modal" data-target="#ranking-modal" data-backdrop="static">Details</button></td>
 						<td style="padding: 5px">
 							<div [hidden]="areEditButtonsHidden(rankingRow.player)">
-								<button class="btn btn-success" style="margin: 2px" (click)="onPlayerRemoveFromTournamentClicked(rankingRow.player)"><i class="fa fa-user-times"></i></button>
-								<button class="btn btn-success" style="margin: 2px" (click)="onPlayerPauseClicked(rankingRow.player)" [hidden]="isPlayerPausing(rankingRow.player)"><i class="fa fa-pause"></i></button>
-								<button class="btn btn-success" style="margin: 2px" (click)="onPlayerResumeClicked(rankingRow.player)" [hidden]="!isPlayerPausing(rankingRow.player)"><i class="fa fa-play"></i></button>
+								<button class="btn btn-kickertool-green" style="margin: 2px" (click)="onPlayerRemoveFromTournamentClicked(rankingRow.player)"><i class="fa fa-user-times"></i></button>
+								<button class="btn btn-kickertool-green" style="margin: 2px" (click)="onPlayerPauseClicked(rankingRow.player)" [hidden]="isPlayerPausing(rankingRow.player)"><i class="fa fa-pause"></i></button>
+								<button class="btn btn-kickertool-green" style="margin: 2px" (click)="onPlayerResumeClicked(rankingRow.player)" [hidden]="!isPlayerPausing(rankingRow.player)"><i class="fa fa-play"></i></button>
 							</div>
 						</td>
 					</tr>
@@ -164,7 +169,7 @@
 				<app-loadandresponse></app-loadandresponse>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-dismiss="modal"
+				<button type="button" class="btn btn-kickertool-green" data-dismiss="modal"
 					(click)="onMatchResultEnteredClicked()">Eintragen</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
 			</div>

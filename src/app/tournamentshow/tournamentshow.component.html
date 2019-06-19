@@ -44,3 +44,23 @@
 		</div>
 	</div>
 </div>
+
+<div #fireworks class="backdrop" [ngStyle]="{'display':displayWinModal}"></div>
+<div class="modal" id="tournament-finished-modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayWinModal}" *ngIf="tournamentShowDTO">
+	<div class="modal-dialog" role="document" style="max-width: 600px; width: 600px">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="row" *ngIf="tournamentShowDTO.rankings">
+					<div class="col">
+						<h2 style="text-align: center">Siegertreppchen</h2>
+						<div class="list-group" style="height: 600px">
+							<li class="list-group-item" *ngFor="let ranking of topThree" style="margin: 10px">
+								<img [src]="getTrophyURL(ranking.rank)" height="80px"><p class="winners"> {{ranking.player.firstName}} {{ranking.player.lastName}}</p>
+							</li>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

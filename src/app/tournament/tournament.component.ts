@@ -23,6 +23,7 @@ export class TournamentComponent implements OnInit {
 	@ViewChild(StopwatchComponent, {static: false}) stopWatchComponent: StopwatchComponent;
 
 	tournamentShowChannel = new BroadcastChannel('tournamentShow');
+	tournamentShowWinModal = new BroadcastChannel('tournamentShowWinModal');
 	refreshTournamentChannel = new BroadcastChannel('refreshTournament');
 	stopwatchChannel = new BroadcastChannel('stopwatch');
 
@@ -56,18 +57,10 @@ export class TournamentComponent implements OnInit {
 		this.zone.run(() =>
 			this.tournamentService.getTournament(uuid).subscribe(singleResponse => {
 				this.tournament = singleResponse.dtoValue;
-
-				if (this.tournament.status === 'FINISHED') {
-					alert('Turnier ist vorbei!');
-				} else {
-					this.getPlayerRankings();
-					this.enableDisableNextRoundBtn();
-					this.refreshMatches(this.tournament.currentRound);
-					this.tournamentShowURL = 'http://localhost:4200/tournamentview/' + this.tournament.uid;
-				}
-
-				this.broadcastTournamentShow();
-
+				this.refreshMatches(this.tournament.currentRound);
+				this.enableDisableNextRoundBtn();
+				this.tournamentShowURL = 'http://localhost:4200/tournamentview/' + this.tournament.uid;
+				this.getPlayerRankings();
 		}));
 	}
 
@@ -117,6 +110,7 @@ export class TournamentComponent implements OnInit {
 	private refreshMatches(round: number): void {
 		this.matchesForRound = [];
 		this.matchesForRound.push(...this.getMatchesForRound(round));
+
 	}
 
 	private getMatchesForRound(round: number): MatchDTO[] {
@@ -140,13 +134,20 @@ export class TournamentComponent implements OnInit {
 		});
 	}
 
+	onFinishTournamentClicked() {
+
+		if (confirm('Turnier wirkliche beenden?')) {
+			this.tournamentShowWinModal.postMessage('');
+		}
+
+	}
+
 	onNewRoundClicked(): void {
 		this.btnNewRound.nativeElement.disabled = true;
 		this.tournamentService.startNextRound(this.tournament.uid).subscribe(singleResponse => {
 			this.tournament = singleResponse.dtoValue;
 			this.refreshMatches(this.tournament.currentRound);
 			this.getPlayerRankings();
-			this.broadcastTournamentShow();
 		});
 	}
 
