@@ -57,6 +57,7 @@ export class TournamentComponent implements OnInit {
 		this.zone.run(() =>
 			this.tournamentService.getTournament(uuid).subscribe(singleResponse => {
 				this.tournament = singleResponse.dtoValue;
+				this.stopwatchChannel.postMessage(this.tournament.settings.minutesPerMatch);
 				this.refreshMatches(this.tournament.currentRound);
 				this.enableDisableNextRoundBtn();
 				this.tournamentShowURL = 'http://localhost:4200/tournamentview/' + this.tournament.uid;
@@ -136,7 +137,7 @@ export class TournamentComponent implements OnInit {
 
 	onFinishTournamentClicked() {
 
-		if (confirm('Turnier wirkliche beenden?')) {
+		if (confirm('Turnier wirklich beenden?')) {
 			this.tournamentShowWinModal.postMessage('');
 		}
 

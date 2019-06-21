@@ -1,6 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import * as joda from 'js-joda';
 import { Globals } from '../classes/globals/Globals';
+import { isNumber } from 'util';
 
 // tslint:disable: indent
 @Component({
@@ -13,8 +14,10 @@ export class StopwatchComponent implements OnInit {
 	stopwatchChannel = new BroadcastChannel('stopwatch');
 	running = false;
 	paused = false;
-	stopwatch = joda.LocalTime.of(0, 5, 0, 0);
+	initStopwatch = undefined;
+	stopwatch = joda.LocalTime.of(0, 0, 0, 0);
 	stopwatchString = this.stopwatch.format(joda.DateTimeFormatter.ofPattern(Globals.TIME_FORMAT));
+	audio = new Audio('./../../assets/audio/timeout.wav');
 	private timer;
 
 	constructor(private zone: NgZone) { }
@@ -23,7 +26,20 @@ export class StopwatchComponent implements OnInit {
 		this.stopwatchChannel.onmessage = msg => this.translateMessage(msg.data);
 	}
 
-	private translateMessage(msg: string): void {
+	init(minutes: number): void {
+		if (!this.running && !this.paused) {
+			this.initStopwatch = joda.LocalTime.of(0, minutes, 0, 0);
+			this.stopwatch = this.initStopwatch;
+			this.stopwatchString = this.stopwatch.format(joda.DateTimeFormatter.ofPattern(Globals.TIME_FORMAT));
+		}
+	}
+
+	private translateMessage(msg: any): void {
+
+		if (isNumber(msg)) {
+			this.zone.run(() => this.init(msg));
+		}
+
 		if (msg === 'start') {
 			this.startStopwatch();
 		}
@@ -49,8 +65,17 @@ export class StopwatchComponent implements OnInit {
 			this.timer = setInterval(() => {
 				this.stopwatch = this.stopwatch.minusNanos(100000000);
 				this.stopwatchString = this.stopwatch.format(joda.DateTimeFormatter.ofPattern(Globals.TIME_FORMAT));
+
+				if (this.stopwatchFinished(this.stopwatch)) {
+					this.audio.play();
+					clearInterval(this.timer);
+				}
 			}, 100)
 		);
+	}
+
+	private stopwatchFinished(stopwatch: joda.LocalTime): boolean {
+		return stopwatch.minute() === 0 && stopwatch.second() === 0 && stopwatch.nano() === 0;
 	}
 
 	private pauseStopwatch(): void {
@@ -66,7 +91,7 @@ export class StopwatchComponent implements OnInit {
 			this.paused = false;
 			clearInterval(this.timer);
 			this.zone.run(() => {
-				this.stopwatch = joda.LocalTime.of(0, 5, 0, 0);
+				this.stopwatch =  this.initStopwatch;
 				this.stopwatchString = this.stopwatch.format(joda.DateTimeFormatter.ofPattern(Globals.TIME_FORMAT));
 			});
 		}
