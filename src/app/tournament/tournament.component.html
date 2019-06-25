@@ -17,7 +17,7 @@
 	</div>
 	<div class="row align-items-center">
 		<div class="col-2">
-			<p class="stopwatch"><app-stopwatch></app-stopwatch></p>
+			<p class="stopwatch">Stoppuhr</p>
 		</div>
 		<div class="col-2" style="text-align: left">
 			<button #btnNewRound type="button" class="btn btn-kickertool" (click)="onNewRoundClicked()">Neue Runde starten</button>
@@ -34,9 +34,9 @@
 	<br />
 	<div class="row">
 		<div class="col-2">
-			<button type="button" style="margin-right: 5px" class="btn btn-kickertool" (click)="onResetStopwatchClicked()" [disabled]="!stopWatchComponent?.running"><i class="fa fa-step-backward"></i></button>
+			<button type="button" style="margin-right: 5px" class="btn btn-kickertool" (click)="onResetStopwatchClicked()"><i class="fa fa-step-backward"></i></button>
 			<button type="button" style="margin-right: 5px" class="btn btn-kickertool" (click)="onStartStopwatchClicked()"><i class="fa fa-play"></i></button>
-			<button type="button" style="margin-right: 5px" class="btn btn-kickertool" (click)="onPauseStopwatchClicked()" [disabled]="!stopWatchComponent?.running"><i class="fa fa-pause"></i></button>
+			<button type="button" style="margin-right: 5px" class="btn btn-kickertool" (click)="onPauseStopwatchClicked()"><i class="fa fa-pause"></i></button>
 		</div>
 		<div class="col-5 table-wrapper-scroll-y my-custom-scrollbar">
 			<table class="table table-sm table-bordered table-striped">
