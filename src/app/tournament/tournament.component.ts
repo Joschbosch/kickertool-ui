@@ -9,6 +9,7 @@ import { Player } from '../classes/Player';
 import { PlayereditComponent } from '../playeredit/playeredit.component';
 import { StopwatchComponent } from '../stopwatch/stopwatch.component';
 import { TournamentShowDTO } from '../classes/TournamentShowDTO';
+import { delay } from 'q';
 
 // tslint:disable: indent
 @Component({
@@ -173,6 +174,12 @@ export class TournamentComponent implements OnInit {
 
 	onShowTournamentViewClicked(): void {
 		this.tournamentShowMode = true;
+		this.refreshAfterTournamentViewClicked();
+	}
+
+	private async refreshAfterTournamentViewClicked() {
+		await delay(500);
+		this.refresh(this.tournament.uid);
 	}
 
 	onOpenPlayerEditClicked(): void {
