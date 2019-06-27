@@ -32,13 +32,13 @@
 		</div>
 	</div>
 	<br />
-	<div class="row">
+	<div class="row" style="height: 80%; max-height: 80%;">
 		<div class="col-2">
 			<button type="button" style="margin-right: 5px" class="btn btn-kickertool" (click)="onResetStopwatchClicked()"><i class="fa fa-step-backward"></i></button>
 			<button type="button" style="margin-right: 5px" class="btn btn-kickertool" (click)="onStartStopwatchClicked()"><i class="fa fa-play"></i></button>
 			<button type="button" style="margin-right: 5px" class="btn btn-kickertool" (click)="onPauseStopwatchClicked()"><i class="fa fa-pause"></i></button>
 		</div>
-		<div class="col-5 table-wrapper-scroll-y my-custom-scrollbar">
+		<div class="col-5 table-scroller">
 			<table class="table table-sm table-bordered table-striped">
 				<thead class="thead-kickertool">
 					<th scope="col">Team 1</th>
@@ -58,7 +58,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="col-5 table-wrapper-scroll-y my-custom-scrollbar">
+		<div class="col-5 table-scroller">
 			<table class="table table-sm table-bordered table-striped">
 				<thead class="thead-kickertool">
 					<th scope="col">#</th>

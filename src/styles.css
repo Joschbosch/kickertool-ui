@@ -96,6 +96,12 @@ h3 {
 	height: 450px;
 	overflow: auto;
 }
+
 .table-wrapper-scroll-y {
 	display: block;
+}
+
+.table-scroller {
+	max-height: 100%;
+	overflow-y: auto;
 }
