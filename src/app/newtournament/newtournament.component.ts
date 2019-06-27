@@ -45,14 +45,20 @@ export class NewtournamentComponent implements OnInit {
         });
 
         this.playerService.getAllPlayer().subscribe(listResponse => {
-            this.selectablePlayers = Object.assign([], listResponse.dtoValueList);
+			this.selectablePlayers = Object.assign([], listResponse.dtoValueList);
+			this.sortPlayers();
         });
 
         this.tournamentConfigurationService.getTournamentModes().subscribe(listResponse => {
             this.tournamentModes = listResponse.dtoValueList;
             this.currentConfig.settings.mode = this.tournamentModes[0].key;
         });
-    }
+	}
+
+	private sortPlayers(): void {
+		this.selectablePlayers = this.selectablePlayers.sort((a: Player, b: Player) => ((a.firstName + a.lastName) > (b.firstName + b.lastName) ? 1 : -1));
+		this.selectedPlayer = this.selectedPlayer.sort((a: Player, b: Player) => ((a.firstName + a.lastName) > (b.firstName + b.lastName) ? 1 : -1));
+	}
 
     arrayOne(n: number): any[] {
         return Array(n);
