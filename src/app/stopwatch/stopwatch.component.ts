@@ -17,7 +17,8 @@ export class StopwatchComponent implements OnInit {
 	initStopwatch = undefined;
 	stopwatch = joda.LocalTime.of(0, 0, 0, 0);
 	stopwatchString = this.stopwatch.format(joda.DateTimeFormatter.ofPattern(Globals.TIME_FORMAT));
-	audio = new Audio('./../../assets/audio/timeout.wav');
+	timoutAudio = new Audio('./../../assets/audio/timeout.wav');
+	startAudio = new Audio('./../../assets/audio/anpfiff.wav');
 	private timer;
 
 	constructor(private zone: NgZone) { }
@@ -61,13 +62,14 @@ export class StopwatchComponent implements OnInit {
 
 		clearInterval(this.timer);
 		this.running = true;
+		this.startAudio.play();
 		this.zone.run(() =>
 			this.timer = setInterval(() => {
 				this.stopwatch = this.stopwatch.minusNanos(100000000);
 				this.stopwatchString = this.stopwatch.format(joda.DateTimeFormatter.ofPattern(Globals.TIME_FORMAT));
 
 				if (this.stopwatchFinished(this.stopwatch)) {
-					this.audio.play();
+					this.timoutAudio.play();
 					clearInterval(this.timer);
 				}
 			}, 100)
