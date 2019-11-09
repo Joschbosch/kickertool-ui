@@ -1,0 +1,12 @@
+<div class="table-wrapper-scroll-y my-custom-scrollbar" [style.height]="height">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th class="table-header-kickertool" *ngFor="let header of headers">{{header}}</th>
+            </tr>
+        </thead>
+        <tbody style="text-align: center">
+            <ng-content></ng-content>
+        </tbody>
+    </table>
+</div>

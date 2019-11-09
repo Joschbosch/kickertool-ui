@@ -1,0 +1,51 @@
+$base-green: #27AE60;
+$hover-green: #219250;
+$disabled: #95a5a6;
+$text-color-white: #ECF0F1;
+
+.icon-size {
+    height: 20px;
+}
+
+h1 {
+    color: $text-color-white;
+}
+
+.btn-kickertool {
+    background-color: $base-green;
+    color: $text-color-white;
+    border-color: $base-green;
+}
+
+.btn-kickertool:hover {
+    color: $text-color-white;
+    background-color: $hover-green;
+    border-color: $hover-green;
+}
+
+.btn-kickertool.disabled, .btn-kickertool:disabled {
+    background-color: $disabled;
+    border-color: $disabled;
+    color: $text-color-white;
+}
+
+.panel-content {
+    height: 450px;
+}
+
+
+.menubar {
+    height: 100px;
+}
+
+#logo {
+    float: left;
+    height: 100%;
+}
+
+.button-bar {
+    float: right;
+    text-align: right;
+    height: 100%;
+    width: 50%;
+}

@@ -1,0 +1,12 @@
+<div class="card custom-card">
+    <div class="card-body">
+        <div class="clearfix">
+                <div class="box"></div>
+                <h5 class="card-title box">{{title}}</h5>
+                <div class="box">
+                    <img src="./../../assets/images/close.png" class="icon-size icon-clickable" style="float: right" (click)="onCloseClicked()"/>
+                </div>
+        </div>
+        <ng-content></ng-content>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+@import './../../../../globals.scss';
+
+$btn-width: 200px;
+
+.centeredElement {
+    padding-top: 20px;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.default {
+    color: $text-color-white;
+    width: $btn-width;
+}
+
+.default:hover {
+    color: $base-green;
+}
+
+.primary {
+    border-width: 3px;
+    border-color: $base-green;
+    color: $base-green;
+    width: $btn-width;
+}
+
+.primary:hover {
+    color: $text-color-white;
+    background-color: $base-green;
+}

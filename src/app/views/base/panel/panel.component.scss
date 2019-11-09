@@ -1,0 +1,36 @@
+@import './../../../../globals.scss';
+
+$header-color: #34495E;
+
+.custom-card {
+    width: 50%;
+    height: 600px;
+    opacity: 0.9;
+    margin-left: 25%;
+}
+
+* {
+    box-sizing: border-box;
+  }
+
+.box {
+    float: left;
+    width: 33.33%;
+    padding: 5px;
+    text-align: center;
+}
+
+.card-title {
+    font-weight: bold;
+    color: $header-color;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.icon-clickable {
+    cursor: pointer;
+}

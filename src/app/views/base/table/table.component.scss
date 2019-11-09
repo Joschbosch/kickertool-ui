@@ -1,0 +1,18 @@
+@import './../../../../globals.scss';
+
+.table-header-kickertool {
+    text-align: center;
+    background-color: $base-green;
+    color: $text-color-white;
+    font-size: 18;
+}
+
+.my-custom-scrollbar {
+    position: relative;
+    overflow: auto;
+    margin-bottom: 10px;
+    }
+
+.table-wrapper-scroll-y {
+    display: block;
+}
