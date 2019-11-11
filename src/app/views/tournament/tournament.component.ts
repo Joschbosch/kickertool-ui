@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TournamentService } from 'src/app/services/tournament.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Tournament } from 'src/app/models/Tournament/Tournament';
 
 @Component({
@@ -12,20 +12,22 @@ export class TournamentComponent implements OnInit {
 
     tournament: Tournament;
 
-    constructor(private route: ActivatedRoute,
+    constructor(private activeRoute: ActivatedRoute,
+                private router: Router,
                 private tournamentService: TournamentService) { }
 
     ngOnInit() {
-        this.route.params.subscribe(params => {
+        this.activeRoute.params.subscribe(params => {
             this.tournamentService.getCurrentTournament(params.uuid).subscribe((result: Tournament) => this.tournament = result);
         });
     }
 
     onShowPlayerManagementViewClicked() {
-        
+        // TODO
     }
 
     onOpenTournamentShowWindowClicked() {
+        window.open('/tournamentshow');
     }
 
 }
