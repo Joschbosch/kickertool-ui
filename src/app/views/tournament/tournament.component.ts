@@ -45,6 +45,5 @@ export class TournamentComponent implements OnInit {
 
     onOpenEnterMatchResultDialogClicked(selectedMatch: Match) {
         this.matchResultEditor.initForMatch(selectedMatch, this.tournament);
-
     }
 }

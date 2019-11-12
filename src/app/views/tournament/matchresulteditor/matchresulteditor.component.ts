@@ -31,7 +31,6 @@ export class MatchresulteditorComponent implements OnInit {
     ngOnInit() {}
 
     initForMatch(newMatch: Match, tournament: Tournament) {
-        console.log(newMatch.uid);
         this.selectedMatch = newMatch;
         this.currentTournament = tournament;
         this.matchResultForm.get('scoreHome').setValue(newMatch.scoreHome);
@@ -42,7 +41,7 @@ export class MatchresulteditorComponent implements OnInit {
 
     onSubmitMatchResult(formData: any) {
         const newMatchResult = new MatchResult(
-            this.selectedMatch.uid,
+            this.selectedMatch.matchID,
             formData.scoreHome,
             formData.scoreVisiting
         );

@@ -14,7 +14,7 @@ export class Match {
 
     public static createFromJSON(jsonMatch: Match) {
         return new Match(
-            jsonMatch.uid,
+            jsonMatch.matchID,
             jsonMatch.roundNumber,
             jsonMatch.scoreHome,
             jsonMatch.scoreVisiting,
@@ -26,7 +26,7 @@ export class Match {
     }
 
     constructor(
-        public uid: string,
+        public matchID: string,
         public roundNumber: number,
         public scoreHome: number,
         public scoreVisiting: number,
