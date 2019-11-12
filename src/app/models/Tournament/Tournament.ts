@@ -22,9 +22,13 @@ export class Tournament {
         public name: string,
         public status: TournamentStatus,
         public settings: TournamentSettings,
-        public matches: any,
-        public playtables: any,
+        public matches: Match[],
+        public playtables: GameTable[],
         public currentRound: number
     ) {}
+
+    public getMatchesForRound(round: number): Match[] {
+        return this.matches.filter(eMatch => eMatch.roundNumber === round);
+    }
 
 }

@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TournamentService } from 'src/app/services/tournament.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tournament } from 'src/app/models/Tournament/Tournament';
+import { MatchresulteditorComponent } from './matchresulteditor/matchresulteditor.component';
+import { Match } from 'src/app/models/Matches/Match';
+declare var $: any;
 
 @Component({
     selector: 'app-tournament',
@@ -9,6 +12,8 @@ import { Tournament } from 'src/app/models/Tournament/Tournament';
     styleUrls: ['./tournament.component.scss']
 })
 export class TournamentComponent implements OnInit {
+
+    @ViewChild(MatchresulteditorComponent, {static: false}) matchResultEditor: MatchresulteditorComponent;
 
     tournament: Tournament;
 
@@ -30,4 +35,16 @@ export class TournamentComponent implements OnInit {
         window.open('/tournamentshow');
     }
 
+    onStartNextRoundClicked() {
+        this.tournamentService.startNextRound(this.tournament.uid).subscribe(result => this.tournament = result);
+    }
+
+    canMatchResultEntered(): boolean {
+        return this.tournament.getMatchesForRound(this.tournament.currentRound)[0].roundNumber !== this.tournament.currentRound;
+    }
+
+    onOpenEnterMatchResultDialogClicked(selectedMatch: Match) {
+        this.matchResultEditor.initForMatch(selectedMatch, this.tournament);
+
+    }
 }

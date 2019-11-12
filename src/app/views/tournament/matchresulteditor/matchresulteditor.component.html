@@ -1,0 +1,51 @@
+<div class="modal fade" id="match-result-modal" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog" role="document" style="max-width: 600px; width: 600px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ergebnis</h5>
+                <button #closeButton type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="matchResultForm" (ngSubmit)="onSubmitMatchResult(matchResultForm.value)">
+                    <div class="form-row" *ngIf="selectedMatch">
+                        <div class="col">
+                            Team 1:
+                        </div>
+                        <div class="col">
+                            <p>{{selectedMatch.homeTeam.player1.firstName}} {{selectedMatch.homeTeam.player1.lastName}}
+                            </p>
+                        </div>
+                        <div class="col">
+                            <p>{{selectedMatch.homeTeam.player2.firstName}} {{selectedMatch.homeTeam.player2.lastName}}
+                            </p>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" formControlName="scoreHome" />
+                        </div>
+                    </div>
+                    <div class="form-row" *ngIf="selectedMatch">
+                        <div class="col">
+                            Team 2:
+                        </div>
+                        <div class="col">
+                            <p>{{selectedMatch.visitingTeam.player1.firstName}}
+                                {{selectedMatch.visitingTeam.player1.lastName}}</p>
+                        </div>
+                        <div class="col">
+                            <p>{{selectedMatch.visitingTeam.player2.firstName}}
+                                {{selectedMatch.visitingTeam.player2.lastName}}</p>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" formControlName="scoreVisiting" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-kickertool" >Eintragen</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
