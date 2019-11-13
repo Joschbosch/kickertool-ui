@@ -35,13 +35,13 @@
                 <app-table [headers]="['#', 'Spieler', 'Punkte', '', '']" class="panel-content" [tableSmall]="true">
                     <tr *ngFor="let ranking of rankings; let i = index">
                         <td>{{ranking.rank}}</td>
-                        <td>{{ranking.player.getFullName()}}</td>
+                        <td>{{ranking.player.getFullName()}}<p *ngIf="ranking.player.isPausing()">( pausiert )</p></td>
                         <td>{{ranking.score}}</td>
                         <td><button type="button" class="btn btn-kickertool" (click)="onOpenRankingDetailsClicked(ranking)" data-toggle="modal" data-target="#ranking-modal">Details</button></td>
                         <td style="padding: 5px">
-                            <button class="btn btn-kickertool" style="margin: 2px" (click)="onPlayerRemoveFromTournamentClicked(ranking.player)"><i class="fa fa-user-times"></i></button>
                             <button class="btn btn-kickertool" style="margin: 2px" (click)="onPlayerPauseClicked(ranking.player)" [hidden]="ranking.player.isPausing()"><i class="fa fa-pause"></i></button>
                             <button class="btn btn-kickertool" style="margin: 2px" (click)="onPlayerResumeClicked(ranking.player)" [hidden]="!ranking.player.isPausing()"><i class="fa fa-play"></i></button>
+                            <button class="btn btn-danger" style="margin: 2px" (click)="onPlayerRemoveFromTournamentClicked(ranking.player)"><i class="fa fa-user-times"></i></button>
                         </td>
                     </tr>
                 </app-table>

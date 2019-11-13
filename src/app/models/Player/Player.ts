@@ -24,6 +24,7 @@ export class Player {
     }
 
     isPausing(): boolean {
+        console.log('Player Status: ' + this.status);
         return this.status === PlayerStatus.PAUSING_TOURNAMENT;
     }
 }
