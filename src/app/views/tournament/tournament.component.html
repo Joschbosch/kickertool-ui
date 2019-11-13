@@ -12,18 +12,43 @@
         <h1>
             {{tournament.name}} - Control Panel
         </h1>
-        <button type="button" class="btn btn-kickertool" (click)="onStartNextRoundClicked()">Next Round</button>
-        <app-stopwatch></app-stopwatch>
-        <app-table [headers]="['Team 1', 'Ergebnis', 'Team 2', 'Tisch', '']" class="panel-content">
-            <tr *ngFor="let match of tournament.getMatchesForRound(tournament.currentRound); let i = index">
-                <td>{{match.homeTeam.player1.firstName}} {{match.homeTeam.player1.lastName}}<br />{{match.homeTeam.player2.firstName}} {{match.homeTeam.player2.lastName}}</td>
-                <td>{{match.scoreHome}} : {{match.scoreVisiting}}</td>
-                <td>{{match.visitingTeam.player1.firstName}} {{match.visitingTeam.player1.lastName}}<br />{{match.visitingTeam.player2.firstName}} {{match.visitingTeam.player2.lastName}}</td>
-                <td>{{match.gameTableDescription}}</td>
-                <td><button type="button" class="btn btn-kickertool" (click)="onOpenEnterMatchResultDialogClicked(match)" data-toggle="modal" data-target="#match-result-modal" [disabled]="canMatchResultEntered()">Ergebnis</button></td>
-            </tr>
-        </app-table>
+        <div class="row">
+            <!-- Matches -->
+            <div class="col-5">
+                <app-table [headers]="['Team 1', 'Ergebnis', 'Team 2', 'Tisch', '']" class="panel-content">
+                    <tr *ngFor="let match of tournament.getMatchesForRound(tournament.currentRound); let i = index">
+                        <td>{{match.homeTeam.player1.getFullName()}}<br />{{match.homeTeam.player2.getFullName()}}</td>
+                        <td>{{match.scoreHome}} : {{match.scoreVisiting}}</td>
+                        <td>{{match.visitingTeam.player1.getFullName()}}<br />{{match.visitingTeam.player2.getFullName()}}</td>
+                        <td>{{match.gameTableDescription}}</td>
+                        <td><button type="button" class="btn btn-kickertool" (click)="onOpenEnterMatchResultDialogClicked(match)" data-toggle="modal" data-target="#match-result-modal" [disabled]="canMatchResultEntered()">Ergebnis</button></td>
+                    </tr>
+                </app-table>
+                <button type="button" class="btn btn-kickertool" (click)="onStartNextRoundClicked()">Next Round</button>                
+            </div>
+            <!-- Stopwatch -->
+            <div class="col-2">
+                <app-stopwatch></app-stopwatch>
+            </div>
+            <!-- Rankings -->
+            <div class="col-5">
+                <app-table [headers]="['#', 'Spieler', 'Punkte', '', '']" class="panel-content" [tableSmall]="true">
+                    <tr *ngFor="let ranking of rankings; let i = index">
+                        <td>{{ranking.rank}}</td>
+                        <td>{{ranking.player.getFullName()}}</td>
+                        <td>{{ranking.score}}</td>
+                        <td><button type="button" class="btn btn-kickertool" (click)="onOpenRankingDetailsClicked(ranking)" data-toggle="modal" data-target="#ranking-modal">Details</button></td>
+                        <td style="padding: 5px">
+                            <button class="btn btn-kickertool" style="margin: 2px" (click)="onPlayerRemoveFromTournamentClicked(ranking.player)"><i class="fa fa-user-times"></i></button>
+                            <button class="btn btn-kickertool" style="margin: 2px" (click)="onPlayerPauseClicked(ranking.player)" [hidden]="ranking.player.isPausing()"><i class="fa fa-pause"></i></button>
+                            <button class="btn btn-kickertool" style="margin: 2px" (click)="onPlayerResumeClicked(ranking.player)" [hidden]="!ranking.player.isPausing()"><i class="fa fa-play"></i></button>
+                        </td>
+                    </tr>
+                </app-table>
+            </div>
+        </div>
     </div>
 </div>
 
 <app-matchresulteditor></app-matchresulteditor>
+<app-rankingdetails></app-rankingdetails>

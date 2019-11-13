@@ -15,6 +15,7 @@ import { TournamentViewerComponent } from './views/tournament/tournament-viewer/
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatchresulteditorComponent } from './views/tournament/matchresulteditor/matchresulteditor.component';
+import { RankingdetailsComponent } from './views/tournament/rankingdetails/rankingdetails.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MatchresulteditorComponent } from './views/tournament/matchresulteditor
     TournamentComponent,
     StopwatchComponent,
     TournamentViewerComponent,
-    MatchresulteditorComponent
+    MatchresulteditorComponent,
+    RankingdetailsComponent
   ],
   imports: [
     BrowserModule,

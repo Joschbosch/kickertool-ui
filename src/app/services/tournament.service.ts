@@ -50,7 +50,7 @@ export class TournamentService extends BaseService<Tournament> {
 
     public getRankingForRound(tournamentUUID: string, roundNo: number): Observable<PlayerRankingRow[]> {
         return this.httpClient
-            .get<ListResponseDTO<PlayerRankingRow>>(this.getAPIUrl() + '/' + tournamentUUID + '/' + roundNo)
+            .get<ListResponseDTO<PlayerRankingRow>>(this.getAPIUrl() + '/getranking/' + tournamentUUID + '/' + roundNo)
             .pipe(
                 map(listResponseDTO => {
                     const rankingRows = [];

@@ -14,12 +14,10 @@
                             Team 1:
                         </div>
                         <div class="col">
-                            <p>{{selectedMatch.homeTeam.player1.firstName}} {{selectedMatch.homeTeam.player1.lastName}}
-                            </p>
+                            <p>{{selectedMatch.homeTeam.player1.getFullName()}}</p>
                         </div>
                         <div class="col">
-                            <p>{{selectedMatch.homeTeam.player2.firstName}} {{selectedMatch.homeTeam.player2.lastName}}
-                            </p>
+                            <p>{{selectedMatch.homeTeam.player2.getFullName()}}</p>
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" formControlName="scoreHome" />
@@ -30,12 +28,10 @@
                             Team 2:
                         </div>
                         <div class="col">
-                            <p>{{selectedMatch.visitingTeam.player1.firstName}}
-                                {{selectedMatch.visitingTeam.player1.lastName}}</p>
+                            <p>{{selectedMatch.visitingTeam.player1.getFullName()}}</p>
                         </div>
                         <div class="col">
-                            <p>{{selectedMatch.visitingTeam.player2.firstName}}
-                                {{selectedMatch.visitingTeam.player2.lastName}}</p>
+                            <p>{{selectedMatch.visitingTeam.player2.getFullName()}}</p>
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" formControlName="scoreVisiting" />

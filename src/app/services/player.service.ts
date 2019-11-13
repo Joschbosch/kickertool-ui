@@ -39,7 +39,7 @@ export class PlayerService extends BaseService<Player> {
 
     public createNewPlayer(fullName: string): Observable<Player> {
         const nameSplit = fullName.split(' ');
-        const playerDTO = new Player('', nameSplit[0], nameSplit[1]);
+        const playerDTO = new Player('', nameSplit[0], nameSplit[1], null, false);
 
         return this.httpClient
             .post<SingleResponseDTO<Player>>(

@@ -11,6 +11,11 @@ h1 {
     color: $text-color-white;
 }
 
+td {
+    text-align: center;
+    vertical-align: middle;
+}
+
 .btn-kickertool {
     background-color: $base-green;
     color: $text-color-white;

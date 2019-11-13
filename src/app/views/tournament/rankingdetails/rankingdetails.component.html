@@ -1,0 +1,31 @@
+<div class="modal fade" id="ranking-modal" tabindex="-1" role="dialog" data-backdrop="static">    
+    <div class="modal-dialog" role="document" style="max-width: 600px; width: 600px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Statistik</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" *ngIf="selectedRankingRow">
+                    <h4>{{selectedRankingRow.player.getFullName()}}</h4>
+                    <app-table [headers]="['Typ', 'Wert']" class="panel-content" [tableSmall]="true">
+                        <tr><td>Rang</td><td>{{selectedRankingRow.rank}}</td></tr>
+                        <tr><td>Punkte</td><td>{{selectedRankingRow.score}}</td></tr>
+                        <tr><td>Tore</td><td>{{selectedRankingRow.goals}}</td></tr>
+                        <tr><td>Tordifferenz</td><td>{{selectedRankingRow.goaldiff}}</td></tr>
+                        <tr><td>Gegnerische Tore</td><td>{{selectedRankingRow.concededGoals}}</td></tr>
+                        <tr><td>Absolvierte Spiele</td><td>{{selectedRankingRow.matchesPlayed}}</td></tr>
+                        <tr><td>Spiele gewonnen</td><td>{{selectedRankingRow.matchesWon}}</td></tr>
+                        <tr><td>Spiele verloren</td><td>{{selectedRankingRow.matchesLost}}</td></tr>
+                        <tr><td>Spiele unentschieden</td><td>{{selectedRankingRow.matchesDraw}}</td></tr>
+                    </app-table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-block" style="width: 20%" data-dismiss="modal">Schlie&szlig;en</button>
+            </div>
+        </div>
+    </div>
+</div>
