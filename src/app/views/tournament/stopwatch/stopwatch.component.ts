@@ -1,6 +1,7 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as joda from 'js-joda';
 import { StopwatchState } from './StopwatchState.enum';
+import { StopwatchChannelCommands } from './StopwatchChannelCommands';
 
 @Component({
     selector: 'app-stopwatch',
@@ -8,6 +9,7 @@ import { StopwatchState } from './StopwatchState.enum';
     styleUrls: ['./stopwatch.component.scss']
 })
 export class StopwatchComponent implements OnInit {
+
     private timeFormat = 'mm:ss.S';
 
     baseMinutes: number;
@@ -16,6 +18,7 @@ export class StopwatchComponent implements OnInit {
 
     private timer: any;
     private stopwatchState = StopwatchState.UNDEFINED;
+    private channel = new BroadcastChannel(StopwatchChannelCommands.CHANNEL_ID);
 
     constructor() {}
 

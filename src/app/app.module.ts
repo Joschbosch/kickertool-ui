@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatchresulteditorComponent } from './views/tournament/matchresulteditor/matchresulteditor.component';
 import { RankingdetailsComponent } from './views/tournament/rankingdetails/rankingdetails.component';
+import { StopwatchviewerComponent } from './views/tournament/tournament-viewer/stopwatchviewer/stopwatchviewer.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { RankingdetailsComponent } from './views/tournament/rankingdetails/ranki
     StopwatchComponent,
     TournamentViewerComponent,
     MatchresulteditorComponent,
-    RankingdetailsComponent
+    RankingdetailsComponent,
+    StopwatchviewerComponent
   ],
   imports: [
     BrowserModule,
