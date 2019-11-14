@@ -16,7 +16,7 @@
             <!-- Matches -->
             <div class="col-5">
                 <app-table [headers]="['Team 1', 'Ergebnis', 'Team 2', 'Tisch', '']" class="panel-content">
-                    <tr *ngFor="let match of tournament.getMatchesForRound(tournament.currentRound); let i = index">
+                    <tr *ngFor="let match of currentMatches">
                         <td>{{match.homeTeam.player1.getFullName()}}<br />{{match.homeTeam.player2.getFullName()}}</td>
                         <td>{{match.scoreHome}} : {{match.scoreVisiting}}</td>
                         <td>{{match.visitingTeam.player1.getFullName()}}<br />{{match.visitingTeam.player2.getFullName()}}</td>
@@ -24,7 +24,16 @@
                         <td><button type="button" class="btn btn-kickertool" (click)="onOpenEnterMatchResultDialogClicked(match)" data-toggle="modal" data-target="#match-result-modal" [disabled]="canMatchResultEntered()">Ergebnis</button></td>
                     </tr>
                 </app-table>
-                <button type="button" class="btn btn-kickertool" (click)="onStartNextRoundClicked()">Next Round</button>                
+                <div class="row">
+                    <div class="col-9">
+                        <select class="form-control" (change)="onRoundSelectionChange($event.target.value)">
+                            <option *ngFor="let item of arrayOne(tournament.currentRound); index as i" selected>Runde {{i + 1}}</option>
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-kickertool" (click)="onStartNextRoundClicked()" [disabled]="isBtnNextRoundDisabled()">Next Round</button>                
+                    </div>
+                </div>
             </div>
             <!-- Stopwatch -->
             <div class="col-2">
@@ -33,7 +42,7 @@
             <!-- Rankings -->
             <div class="col-5">
                 <app-table [headers]="['#', 'Spieler', 'Punkte', '', '']" class="panel-content" [tableSmall]="true">
-                    <tr *ngFor="let ranking of rankings; let i = index">
+                    <tr *ngFor="let ranking of rankings">
                         <td>{{ranking.rank}}</td>
                         <td>{{ranking.player.getFullName()}}<p *ngIf="ranking.player.isPausing()">( pausiert )</p></td>
                         <td>{{ranking.score}}</td>

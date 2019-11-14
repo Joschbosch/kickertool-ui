@@ -1,3 +1,3 @@
 export interface IRefreshCallback {
-    doRefreshFromOutside(): void;
+    doRefreshFromCallback(): void;
 }

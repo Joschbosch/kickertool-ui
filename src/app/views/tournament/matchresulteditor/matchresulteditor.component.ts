@@ -55,7 +55,7 @@ export class MatchresulteditorComponent implements OnInit {
             ).subscribe(() => {
                 // tslint:disable-next-line: max-line-length
                 console.log('Match zu Id: ' + this.selectedMatch.matchID + ' eingetragen. Mit Ergebnis: ' + formData.scoreHome + ':' + formData.scoreVisiting);
-                this.cb.doRefreshFromOutside();
+                this.cb.doRefreshFromCallback();
                 this.closeButton.nativeElement.click();
             });
     }

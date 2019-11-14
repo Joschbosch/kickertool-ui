@@ -27,6 +27,8 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
     tournament: Tournament;
     rankings: PlayerRankingRow[];
     tournamentId: string;
+    currentRound: number;
+    currentMatches: Match[];
 
     constructor(
         private activeRoute: ActivatedRoute,
@@ -55,7 +57,7 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
 
     private refreshRankings() {
         this.tournamentService
-            .getRankingForRound(this.tournamentId, this.tournament.currentRound)
+            .getRankingForRound(this.tournamentId, this.currentRound)
             .subscribe(newRankings => (this.rankings = newRankings));
     }
 
@@ -64,13 +66,28 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
             .getCurrentTournament(this.tournamentId)
             .subscribe((result: Tournament) => {
                 this.tournament = result;
+                this.currentRound = result.currentRound;
                 this.refreshRankings();
+                this.refreshMatches();
             });
+    }
+    refreshMatches() {
+        this.currentMatches = this.tournament.getMatchesForRound(this.currentRound);
+    }
+
+    onRoundSelectionChange(roundString: string) {
+        const selectedRound = parseInt(roundString.split(' ')[1], 10);
+        this.currentRound = selectedRound;
+        this.refreshMatches();
+        this.refreshRankings();
+    }
+
+    arrayOne(n: number): any[] {
+        return Array(n);
     }
 
     onShowPlayerManagementViewClicked() {
         // TODO
-        this.stopwatch.initStopwatch(this.tournament.settings.minutesPerMatch);
     }
 
     onOpenTournamentShowWindowClicked() {
@@ -82,12 +99,14 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
             .startNextRound(this.tournament.uid)
             .subscribe(resultTournament => {
                 this.tournament = resultTournament;
+                this.currentRound = resultTournament.currentRound;
                 this.refreshRankings();
+                this.refreshMatches();
             });
     }
 
     canMatchResultEntered(): boolean {
-        return this.tournament.getMatchesForRound(this.tournament.currentRound)[0].roundNumber !== this.tournament.currentRound;
+        return this.tournament.getMatchesForRound(this.currentRound)[0].roundNumber !== this.tournament.currentRound;
     }
 
     onOpenEnterMatchResultDialogClicked(selectedMatch: Match) {
@@ -101,7 +120,7 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
         this.rankingDetails.initForRankingRow(selectedRankingRow);
     }
 
-    doRefreshFromOutside(): void {
+    doRefreshFromCallback(): void {
         this.refreshTournament();
     }
 
@@ -129,5 +148,10 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
                 this.tournament = resultTournament;
                 this.refreshRankings();
             });
+    }
+
+    isBtnNextRoundDisabled(): boolean {
+        return this.currentRound !== this.tournament.currentRound ||
+            this.currentMatches.filter((eMatch) => !eMatch.isMatchFinished()).length > 0;
     }
 }

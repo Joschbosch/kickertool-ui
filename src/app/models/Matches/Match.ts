@@ -35,4 +35,8 @@ export class Match {
         public visitingTeam: Team,
         public gameTableDescription: string
     ) {}
+
+    isMatchFinished() {
+        return this.status === MatchStatus.FINISHED;
+    }
 }
