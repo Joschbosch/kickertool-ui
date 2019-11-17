@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import * as joda from 'js-joda';
-import { StopwatchState } from './StopwatchState.enum';
-import { StopwatchChannelCommands } from './StopwatchChannelCommands';
+import { StopwatchState } from '../../../models/Stopwatch/StopwatchState.enum';
+import { StopwatchChannelCommands } from '../../../models/Stopwatch/StopwatchChannelCommands';
+import { BroadcastMessage } from 'src/app/models/BroadcastMessage';
+import { Stopwatch } from 'src/app/models/Stopwatch/stopwatch';
+import { TournamentChannelCommands } from 'src/app/models/Tournament/TournamentChannelCommands';
 
 @Component({
     selector: 'app-stopwatch',
@@ -10,79 +13,46 @@ import { StopwatchChannelCommands } from './StopwatchChannelCommands';
 })
 export class StopwatchComponent implements OnInit {
 
-    private timeFormat = 'mm:ss.S';
-
-    baseMinutes: number;
-    stopwatch = joda.LocalTime.of(0, 0, 0, 0);
-    stopwatchString: string;
-
-    private timer: any;
-    private stopwatchState = StopwatchState.UNDEFINED;
     private channel = new BroadcastChannel(StopwatchChannelCommands.CHANNEL_ID);
+    private tournamentChannel = new BroadcastChannel(TournamentChannelCommands.CHANNEL_ID);
+
+    stopwatch: Stopwatch;
 
     constructor() {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.channel.onmessage = msg => this.doOnMessage(msg.data);
+        this.stopwatch = new Stopwatch();
+    }
+
+    private doOnMessage(msg: BroadcastMessage) {
+        if (msg.cmd === StopwatchChannelCommands.CMD_REGISTER) {
+            this.channel.postMessage(
+                new BroadcastMessage(
+                    StopwatchChannelCommands.CMD_INIT,
+                    this.stopwatch.baseMinutes
+                )
+            );
+        }
+    }
 
     initStopwatch(minutes: number) {
-      if (this.isStateUndefined()) {
-        this.baseMinutes = minutes;
-        this.onResetStopwatchClicked();
-      }
+        this.stopwatch.init(minutes);
     }
 
     onResetStopwatchClicked() {
-        clearInterval(this.timer);
-        this.stopwatch = joda.LocalTime.of(0, this.baseMinutes, 0, 0);
-        this.stopwatchState = StopwatchState.INITIALIZED;
-        this.stopwatchString = this.stopwatch.format(joda.DateTimeFormatter.ofPattern(this.timeFormat));
+        this.stopwatch.reset();
+        this.channel.postMessage(new BroadcastMessage(StopwatchChannelCommands.CMD_RESET));
     }
 
     onStartStopwatchClicked() {
-        this.stopwatchState = StopwatchState.RUNNING;
-        this.timer = setInterval(() => {
-          this.stopwatch = this.stopwatch.minusNanos(100000000);
-          this.stopwatchString = this.stopwatch.format(
-              joda.DateTimeFormatter.ofPattern(this.timeFormat)
-          );
-
-          if (this.isTimeAtZero(this.stopwatch)) {
-              clearInterval(this.timer);
-              this.stopwatchState = StopwatchState.FINISHED;
-          }
-      }, 100);
-    }
-
-    private isTimeAtZero(stopwatch: joda.LocalTime): boolean {
-        return (
-            stopwatch.minute() === 0 &&
-            stopwatch.second() === 0 &&
-            stopwatch.nano() === 0
-        );
+        this.stopwatch.start();
+        this.channel.postMessage(new BroadcastMessage(StopwatchChannelCommands.CMD_START));
     }
 
     onPauseStopwatchClicked() {
-        clearInterval(this.timer);
-        this.stopwatchState = StopwatchState.PAUSED;
+        this.stopwatch.pause();
+        this.channel.postMessage(new BroadcastMessage(StopwatchChannelCommands.CMD_PAUSE));
     }
 
-    isStateInitialized(): boolean {
-        return this.stopwatchState === StopwatchState.INITIALIZED;
-    }
-
-    isStateRunning(): boolean {
-        return this.stopwatchState === StopwatchState.RUNNING;
-    }
-
-    isStatePaused(): boolean {
-        return this.stopwatchState === StopwatchState.PAUSED;
-    }
-
-    isStateFinished(): boolean {
-        return this.stopwatchState === StopwatchState.FINISHED;
-    }
-
-    isStateUndefined(): boolean {
-        return this.stopwatchState === StopwatchState.UNDEFINED;
-    }
 }

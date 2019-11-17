@@ -1,1 +1,17 @@
 @import './../tournament.component.scss';
+
+h1 {
+    font-size: 3em;
+}
+
+#kickertable {
+    src: url('/assets/images/close.png');
+}
+
+.normal-div {
+    height: 50px;
+}
+
+.short-div {
+    height: 25px;
+}

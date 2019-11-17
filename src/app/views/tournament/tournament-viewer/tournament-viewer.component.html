@@ -1,1 +1,48 @@
-<app-stopwatchviewer></app-stopwatchviewer>>
+<div class="container-fluid">
+    <div class="menubar">
+        <div id="logo">
+            <img src="./../../assets/images/parcit-logo.png" />
+        </div>
+        <div style="float: right; margin-top: 10px;">
+            <h1>{{ tournament?.name }}</h1>
+        </div>
+    </div>
+    <div *ngIf="showMatchesWithStopwatch">
+        <app-stopwatchviewer></app-stopwatchviewer>
+        <div class="row">
+            <!-- Matches -->
+            <div class="col-12">
+                <app-table [headers]="['']" class="panel-content">
+                    <tr *ngFor="let match of currentMatches">
+                        <td style="text-align: center;">
+                            <div class="row" style="width: 90%;">
+                                <div class="col-sm5 normal-div">
+                                    <div class="short-div">
+                                        {{match.homeTeam.player1.getFullName()}}
+                                    </div>
+                                    <div class="short-div">
+                                        {{match.homeTeam.player2.getFullName()}}
+                                    </div>
+                                </div>
+                                <div class="col-sm2 normal-div">
+                                    <img src="/assets/images/kickertable.png" height="50" />
+                                </div>
+                                <div class="col-sm5 normal-div">
+                                    <div class="short-div">
+                                        {{match.visitingTeam.player1.getFullName()}}
+                                    </div>
+                                    <div class="short-div">
+                                        {{match.visitingTeam.player2.getFullName()}}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </app-table>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="showRankingsOnly">
+
+    </div>
+</div>

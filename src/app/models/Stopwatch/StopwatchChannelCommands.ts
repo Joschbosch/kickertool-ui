@@ -1,7 +1,7 @@
-
 export class StopwatchChannelCommands {
 
     public static CHANNEL_ID = 'stopwatch';
+    public static CMD_REGISTER = 'CMD_REGISTER';
     public static CMD_RESET = 'CMD_RESET';
     public static CMD_START = 'CMD_START';
     public static CMD_PAUSE = 'CMD_PAUSE';

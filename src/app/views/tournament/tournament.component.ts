@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, AfterContentInit, AfterViewInit } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    ViewChild,
+    AfterContentInit,
+    AfterViewInit
+} from '@angular/core';
 import { TournamentService } from 'src/app/services/tournament.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tournament } from 'src/app/models/Tournament/Tournament';
@@ -11,6 +17,8 @@ import { RankingdetailsComponent } from './rankingdetails/rankingdetails.compone
 import { PlayerStatus } from 'src/app/models/Player/PlayerStatus.enum';
 import { StopwatchComponent } from './stopwatch/stopwatch.component';
 import { delay } from 'q';
+import { TournamentChannelCommands } from 'src/app/models/Tournament/TournamentChannelCommands';
+import { BroadcastMessage } from 'src/app/models/BroadcastMessage';
 declare var $: any;
 
 @Component({
@@ -19,10 +27,11 @@ declare var $: any;
     styleUrls: ['./tournament.component.scss']
 })
 export class TournamentComponent implements OnInit, IRefreshCallback {
-
     @ViewChild(MatchresulteditorComponent, { static: false }) matchResultEditor: MatchresulteditorComponent;
     @ViewChild(RankingdetailsComponent, { static: false }) rankingDetails: RankingdetailsComponent;
-    @ViewChild(StopwatchComponent, {static: false}) stopwatch: StopwatchComponent;
+    @ViewChild(StopwatchComponent, { static: false }) stopwatch: StopwatchComponent;
+
+    private channel = new BroadcastChannel(TournamentChannelCommands.CHANNEL_ID);
 
     tournament: Tournament;
     rankings: PlayerRankingRow[];
@@ -42,6 +51,18 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
         });
 
         this.initStopwatchWhenReady();
+        this.channel.onmessage = msg => this.doOnMessage(msg.data);
+    }
+
+    private doOnMessage(msg: BroadcastMessage) {
+        if (msg.cmd === TournamentChannelCommands.CMD_REGISTER) {
+            this.channel.postMessage(
+                new BroadcastMessage(
+                    TournamentChannelCommands.CMD_INIT,
+                    this.tournament
+                )
+            );
+        }
     }
 
     private async initStopwatchWhenReady() {
@@ -49,7 +70,9 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
             await delay(500);
             if (this.stopwatch !== undefined) {
                 this.tournament.settings.minutesPerMatch = 5;
-                this.stopwatch.initStopwatch(this.tournament.settings.minutesPerMatch);
+                this.stopwatch.initStopwatch(
+                    this.tournament.settings.minutesPerMatch
+                );
                 break;
             }
         }
@@ -58,7 +81,7 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
     private refreshRankings() {
         this.tournamentService
             .getRankingForRound(this.tournamentId, this.currentRound)
-            .subscribe(newRankings => (this.rankings = newRankings));
+            .subscribe(newRankings => this.rankings = newRankings);
     }
 
     private refreshTournament() {
@@ -70,9 +93,11 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
                 this.refreshRankings();
                 this.refreshMatches();
             });
-    }
-    refreshMatches() {
-        this.currentMatches = this.tournament.getMatchesForRound(this.currentRound);
+        }
+        refreshMatches() {
+            this.currentMatches = this.tournament.getMatchesForRound(
+            this.currentRound
+        );
     }
 
     onRoundSelectionChange(roundString: string) {
@@ -106,14 +131,18 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
     }
 
     canMatchResultEntered(): boolean {
-        return this.tournament.getMatchesForRound(this.currentRound)[0].roundNumber !== this.tournament.currentRound;
+        return (
+            this.tournament.getMatchesForRound(this.currentRound)[0]
+                .roundNumber !== this.tournament.currentRound
+        );
     }
 
     onOpenEnterMatchResultDialogClicked(selectedMatch: Match) {
         this.matchResultEditor.initForMatch(
             selectedMatch,
             this.tournament,
-            this);
+            this
+        );
     }
 
     onOpenRankingDetailsClicked(selectedRankingRow: PlayerRankingRow) {
@@ -125,10 +154,14 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
     }
 
     onPlayerRemoveFromTournamentClicked(player: Player) {
-        if (confirm(player.getFullName() + ' wirklich vom Turnier entfernen?')) {
-            this.tournamentService.removePlayerFromTournament(this.tournamentId, player).subscribe(resultPlayer => {
-                this.refreshTournament();
-            });
+        if (
+            confirm(player.getFullName() + ' wirklich vom Turnier entfernen?')
+        ) {
+            this.tournamentService
+                .removePlayerFromTournament(this.tournamentId, player)
+                .subscribe(resultPlayer => {
+                    this.refreshTournament();
+                });
         }
     }
 
@@ -151,7 +184,10 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
     }
 
     isBtnNextRoundDisabled(): boolean {
-        return this.currentRound !== this.tournament.currentRound ||
-            this.currentMatches.filter((eMatch) => !eMatch.isMatchFinished()).length > 0;
+        return (
+            this.currentRound !== this.tournament.currentRound ||
+            this.currentMatches.filter(eMatch => !eMatch.isMatchFinished())
+                .length > 0
+        );
     }
 }
