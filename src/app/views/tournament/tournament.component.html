@@ -5,6 +5,7 @@
         </div>
         <div class="button-bar">
             <app-toolbar-button text="Spieler hinzufügen" icon="fas fa-user" (clicked)="onShowPlayerManagementViewClicked()" data-toggle="modal" data-target="#player-tournament-management-modal"></app-toolbar-button>
+            <app-toolbar-button text="Turnier beenden" icon="fas fa-trophy" (clicked)="onFinishTournamentClicked()"></app-toolbar-button>
             <app-toolbar-button text="Turnieransicht" icon="fas fa-futbol" [highlighted]="true" (clicked)="onOpenTournamentShowWindowClicked()"></app-toolbar-button>
         </div>
     </div>

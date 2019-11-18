@@ -212,4 +212,10 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
                 .length > 0
         );
     }
+
+    onFinishTournamentClicked() {
+        if (confirm('Wirklich Turnier beenden?')) {
+            this.channel.postMessage(new BroadcastMessage(TournamentChannelCommands.CMD_FINISH_TOURNAMENT));
+        }
+    }
 }

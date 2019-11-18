@@ -46,4 +46,25 @@
             </app-table>
         </div>
     </div>
+    <button #showTrophy hidden="true" data-toggle="modal" data-target="#tournament-finished-modal"></button>
+</div>
+
+<div class="modal" id="tournament-finished-modal" tabindex="-1" role="dialog" data-backdrop="static">
+	<div class="modal-dialog" role="document" style="max-width: 600px; width: 600px">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="row">
+					<div class="col">
+						<h2 style="text-align: center">Siegertreppchen</h2>
+						<div class="list-group" style="height: 600px" *ngIf="rankings">
+							<li class="list-group-item" *ngFor="let ranking of getTopThree()" style="margin: 10px">
+                                <img [src]="getTrophyURL(ranking.rank)" height="80px">
+                                <p class="winners">{{ranking.rank}}. {{ranking.player.firstName}} {{ranking.player.lastName}}</p>
+							</li>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

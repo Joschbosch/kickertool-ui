@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { TournamentChannelCommands } from 'src/app/models/Tournament/TournamentChannelCommands';
 import { BroadcastMessage } from 'src/app/models/BroadcastMessage';
 import { Tournament } from 'src/app/models/Tournament/Tournament';
@@ -11,10 +11,17 @@ import { PlayerRankingRow } from 'src/app/models/Tournament/PlayerRankingRowDTO'
     styleUrls: ['./tournament-viewer.component.scss']
 })
 export class TournamentViewerComponent implements OnInit {
+
+    @ViewChild('showTrophy', {static: true}) btnShowTrophy: ElementRef;
+
     private channel = new BroadcastChannel(TournamentChannelCommands.CHANNEL_ID);
     tournament: Tournament;
     currentMatches: Match[];
     rankings: PlayerRankingRow[];
+
+    trophieURLS = ['./../../../../assets/images/Golden_Trophy.jpg',
+                    './../../../../assets/images/Silver_Trophy.jpg',
+                    './../../../../assets/images/Bronze_Trophy.jpg'];
 
     constructor(private zone: NgZone) {}
 
@@ -37,10 +44,22 @@ export class TournamentViewerComponent implements OnInit {
             this.zone.run(() => this.rankings = PlayerRankingRow.createFromJSONArray(msg.data));
         }
 
+        if (msg.cmd === TournamentChannelCommands.CMD_FINISH_TOURNAMENT) {
+            this.btnShowTrophy.nativeElement.click();
+        }
+
     }
     setTournament(tournamentJson: Tournament) {
         this.tournament = Tournament.createFromJSON(tournamentJson);
         this.currentMatches = this.tournament.getMatchesForRound(this.tournament.currentRound);
+    }
+
+    getTrophyURL(rank: number): string {
+        return this.trophieURLS[rank - 1];
+    }
+
+    getTopThree(): PlayerRankingRow[] {
+        return this.rankings.filter((ranking: PlayerRankingRow) => ranking.rank <= 3);
     }
 
 }
