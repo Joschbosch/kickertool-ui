@@ -3,6 +3,7 @@ import { TournamentChannelCommands } from 'src/app/models/Tournament/TournamentC
 import { BroadcastMessage } from 'src/app/models/BroadcastMessage';
 import { Tournament } from 'src/app/models/Tournament/Tournament';
 import { Match } from 'src/app/models/Matches/Match';
+import { PlayerRankingRow } from 'src/app/models/Tournament/PlayerRankingRowDTO';
 
 @Component({
     selector: 'app-tournament-viewer',
@@ -13,9 +14,7 @@ export class TournamentViewerComponent implements OnInit {
     private channel = new BroadcastChannel(TournamentChannelCommands.CHANNEL_ID);
     tournament: Tournament;
     currentMatches: Match[];
-
-    showMatchesWithStopwatch = false;
-    showRankingsOnly = false;
+    rankings: PlayerRankingRow[];
 
     constructor(private zone: NgZone) {}
 
@@ -27,30 +26,21 @@ export class TournamentViewerComponent implements OnInit {
     }
 
     private doOnMessage(msg: BroadcastMessage) {
-        if (msg.cmd === TournamentChannelCommands.CMD_INIT) {
+        if (msg.cmd === TournamentChannelCommands.CMD_UPDATE_TOURNAMENT) {
             this.zone.run(() => {
-              this.tournament = Tournament.createFromJSON(msg.data);
-              this.currentMatches = this.tournament.getMatchesForRound(this.tournament.currentRound);
-              this.setShowMatchesWithStopwatch();
+                this.setTournament(msg.data);
             });
         }
 
-        if (msg.cmd === TournamentChannelCommands.CMD_SHOW_MATCHES_WITH_STOPWATCH) {
-          this.zone.run(() => this.setShowMatchesWithStopwatch());
+        if (msg.cmd === TournamentChannelCommands.CMD_UPDATE_RANKINGS) {
+            console.log( msg.data);
+            this.zone.run(() => this.rankings = PlayerRankingRow.createFromJSONArray(msg.data));
         }
 
-        if (msg.cmd === TournamentChannelCommands.CMD_SHOW_RANKINGS_ONLY) {
-          this.zone.run(() => this.setShowRankingsOnly());
-        }
+    }
+    setTournament(tournamentJson: Tournament) {
+        this.tournament = Tournament.createFromJSON(tournamentJson);
+        this.currentMatches = this.tournament.getMatchesForRound(this.tournament.currentRound);
     }
 
-    private setShowMatchesWithStopwatch() {
-      this.showMatchesWithStopwatch = true;
-      this.showRankingsOnly = false;
-    }
-
-    private setShowRankingsOnly() {
-      this.showMatchesWithStopwatch = false;
-      this.showRankingsOnly = true;
-    }
 }

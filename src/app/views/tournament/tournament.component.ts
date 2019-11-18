@@ -56,13 +56,27 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
 
     private doOnMessage(msg: BroadcastMessage) {
         if (msg.cmd === TournamentChannelCommands.CMD_REGISTER) {
-            this.channel.postMessage(
-                new BroadcastMessage(
-                    TournamentChannelCommands.CMD_INIT,
-                    this.tournament
-                )
-            );
+            this.postUpdateTournamentCommand();
+            this.postUpdateRankingsCommand();
         }
+    }
+
+    private postUpdateTournamentCommand() {
+        this.channel.postMessage(
+            new BroadcastMessage(
+                TournamentChannelCommands.CMD_UPDATE_TOURNAMENT,
+                this.tournament
+            )
+        );
+    }
+
+    private postUpdateRankingsCommand() {
+        this.channel.postMessage(
+            new BroadcastMessage(
+                TournamentChannelCommands.CMD_UPDATE_RANKINGS,
+                this.rankings
+            )
+        );
     }
 
     private async initStopwatchWhenReady() {
@@ -81,7 +95,12 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
     private refreshRankings() {
         this.tournamentService
             .getRankingForRound(this.tournamentId, this.currentRound)
-            .subscribe(newRankings => this.rankings = newRankings);
+            .subscribe(newRankings => {
+                this.rankings = newRankings;
+                if (this.currentRound === this.tournament.currentRound) {
+                    this.postUpdateRankingsCommand();
+                }
+            });
     }
 
     private refreshTournament() {
@@ -90,6 +109,7 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
             .subscribe((result: Tournament) => {
                 this.tournament = result;
                 this.currentRound = result.currentRound;
+                this.postUpdateTournamentCommand();
                 this.refreshRankings();
                 this.refreshMatches();
             });
@@ -125,6 +145,7 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
             .subscribe(resultTournament => {
                 this.tournament = resultTournament;
                 this.currentRound = resultTournament.currentRound;
+                this.postUpdateTournamentCommand();
                 this.refreshRankings();
                 this.refreshMatches();
             });
