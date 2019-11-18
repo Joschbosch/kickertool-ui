@@ -116,10 +116,9 @@ export class TournamentService extends BaseService<Tournament> {
             );
     }
 
-    public addPlayerToTournament(tournamentUUID: string, player: Player[]): Observable<Player[]> {
-
-        const playerIds = [];
-        player.forEach(ePlayer => playerIds.push(ePlayer.uid));
+    public addPlayerToTournament(tournamentUUID: string, player: Player): Observable<Player[]> {
+        console.log(tournamentUUID);
+        const playerIds = [player.uid];
 
         return this.httpClient
             .put<ListResponseDTO<Player>>(this.getAPIUrl() + '/addplayers/' + tournamentUUID, { playerIds })

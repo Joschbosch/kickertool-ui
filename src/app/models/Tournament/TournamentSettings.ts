@@ -11,8 +11,7 @@ export class TournamentSettings {
             jsonSetting.goalsToWin,
             jsonSetting.minutesPerMatch,
             jsonSetting.pointsForWinner,
-            jsonSetting.pointsForDraw,
-            jsonSetting.currentNoOfMatches
+            jsonSetting.pointsForDraw
         );
     }
 
@@ -23,7 +22,6 @@ export class TournamentSettings {
                 public goalsToWin: number = null,
                 public minutesPerMatch: number = null,
                 public pointsForWinner: number = null,
-                public pointsForDraw: number = null,
-                public currentNoOfMatches: number = null) {}
+                public pointsForDraw: number = null) {}
 
 }

@@ -25,7 +25,7 @@ export class StopwatchviewerComponent implements OnInit {
 
     private doOnMessage(msg: BroadcastMessage) {
         if (msg.cmd === StopwatchChannelCommands.CMD_INIT) {
-            this.zone.run(() => this.stopwatch.init(msg.data));
+            this.zone.run(() => this.stopwatch.init(msg.data, false));
         }
 
         if (msg.cmd === StopwatchChannelCommands.CMD_START) {

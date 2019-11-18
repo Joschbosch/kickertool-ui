@@ -37,6 +37,22 @@ export class PlayerService extends BaseService<Player> {
             );
     }
 
+    public loadAllPlayersNotInTournament(tournamentId: string): Observable<Player[]> {
+        return this.httpClient
+            .get<ListResponseDTO<Player>>(
+                this.getAPIUrl() + '/getall-not-in-tournament/' + tournamentId
+            )
+            .pipe(
+                map(listResponseDTO => {
+                    const resultPlayers = [];
+                    for (const playerPrototype of listResponseDTO.dtoValueList) {
+                        resultPlayers.push(Player.createFromJSON(playerPrototype));
+                    }
+                    return resultPlayers;
+                })
+            );
+    }
+
     public createNewPlayer(fullName: string): Observable<Player> {
         const nameSplit = fullName.split(' ');
         const playerDTO = new Player('', nameSplit[0], nameSplit[1], null, false);

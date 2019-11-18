@@ -1,0 +1,42 @@
+<div class="modal fade" id="player-tournament-management-modal" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog" role="document" style="max-width: 600px; width: 600px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Spieler hinzufügen</h5>
+                <button #closeButton type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <app-table [headers]="['Vorname', 'Nachname', '']" class="panel-content">
+                    <tr *ngFor="let player of players">
+                        <td>{{ player.firstName }}</td>
+                        <td>{{ player.lastName }}</td>
+                        <td style="padding: 5px">
+                            <button type="button" class="btn btn-kickertool" (click)="onPlayerAddToTournamentClicked(player)">
+                                <i class="fas fa-plus fa-sm"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </app-table>
+                <form
+                    [formGroup]="newPlayerForm"
+                    (ngSubmit)="onCreateNewPlayerSubmit(newPlayerForm.value)">
+                    <div class="form-row">
+                        <div class="col-10">
+                            <input
+                                type="text"
+                                class="form-control"
+                                formControlName="name"
+                                placeholder="Neuer Name"/>
+                        </div>
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-kickertool float-right">
+                                Anlegen
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

@@ -1,21 +1,19 @@
-<div class="container-fluid" *ngIf="tournament">
+<div class="container-fluid" *ngIf="tournament" style="height: 100%">
     <div class="menubar">
         <div id="logo">
                 <img src="./../../assets/images/parcit-logo.png" />
         </div>
         <div class="button-bar">
-            <app-toolbar-button text="Spieler hinzufügen" icon="fas fa-user" (clicked)="onShowPlayerManagementViewClicked()"></app-toolbar-button>
+            <app-toolbar-button text="Spieler hinzufügen" icon="fas fa-user" (clicked)="onShowPlayerManagementViewClicked()" data-toggle="modal" data-target="#player-tournament-management-modal"></app-toolbar-button>
             <app-toolbar-button text="Turnieransicht" icon="fas fa-futbol" [highlighted]="true" (clicked)="onOpenTournamentShowWindowClicked()"></app-toolbar-button>
         </div>
     </div>
-    <div>
-        <h1>
-            {{tournament.name}} - Control Panel
-        </h1>
-        <div class="row">
+    <div style="height: 85%;">
+        <h1>{{tournament.name}} - Control Panel</h1>
+        <div class="row" style="height: 90%;">
             <!-- Matches -->
-            <div class="col-5">
-                <app-table [headers]="['Team 1', 'Ergebnis', 'Team 2', 'Tisch', '']" class="panel-content">
+            <div class="col-5" style="height: 80%;">
+                <app-table [headers]="['Team 1', 'Ergebnis', 'Team 2', 'Tisch', '']">
                     <tr *ngFor="let match of currentMatches">
                         <td>{{match.homeTeam.player1.getFullName()}}<br />{{match.homeTeam.player2.getFullName()}}</td>
                         <td>{{match.scoreHome}} : {{match.scoreVisiting}}</td>
@@ -40,8 +38,8 @@
                 <app-stopwatch></app-stopwatch>
             </div>
             <!-- Rankings -->
-            <div class="col-5">
-                <app-table [headers]="['#', 'Spieler', 'Punkte', '', '']" class="panel-content" [tableSmall]="true">
+            <div class="col-5" style="height: 100%;">
+                <app-table [headers]="['#', 'Spieler', 'Punkte', '', '']" [tableSmall]="true">
                     <tr *ngFor="let ranking of rankings">
                         <td>{{ranking.rank}}</td>
                         <td>{{ranking.player.getFullName()}}<p *ngIf="ranking.player.isPausing()">( pausiert )</p></td>
@@ -61,3 +59,4 @@
 
 <app-matchresulteditor></app-matchresulteditor>
 <app-rankingdetails></app-rankingdetails>
+<app-playertournamentmanagement></app-playertournamentmanagement>

@@ -8,7 +8,7 @@ import { TournamentViewerComponent } from './views/tournament/tournament-viewer/
 const routes: Routes = [
   {path: '', component: MainmenuComponent},
   {path: 'tournament/:uuid', component: TournamentComponent},
-  {path: 'tournamentshow/:uuid', component: TournamentViewerComponent}
+  {path: 'tournamentshow', component: TournamentViewerComponent}
 ];
 
 @NgModule({

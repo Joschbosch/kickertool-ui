@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatchresulteditorComponent } from './views/tournament/matchresulteditor/matchresulteditor.component';
 import { RankingdetailsComponent } from './views/tournament/rankingdetails/rankingdetails.component';
 import { StopwatchviewerComponent } from './views/tournament/tournament-viewer/stopwatchviewer/stopwatchviewer.component';
+import { PlayertournamentManagementComponent } from './views/tournament/playertournamentmanagement/playertournamentmanagement.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { StopwatchviewerComponent } from './views/tournament/tournament-viewer/s
     TournamentViewerComponent,
     MatchresulteditorComponent,
     RankingdetailsComponent,
-    StopwatchviewerComponent
+    StopwatchviewerComponent,
+    PlayertournamentManagementComponent
   ],
   imports: [
     BrowserModule,

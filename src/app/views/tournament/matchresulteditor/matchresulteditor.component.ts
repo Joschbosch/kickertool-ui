@@ -37,9 +37,7 @@ export class MatchresulteditorComponent implements OnInit {
         this.currentTournament = tournament;
         this.cb = cb;
         this.matchResultForm.get('scoreHome').setValue(newMatch.scoreHome);
-        this.matchResultForm
-            .get('scoreVisiting')
-            .setValue(newMatch.scoreVisiting);
+        this.matchResultForm.get('scoreVisiting').setValue(newMatch.scoreVisiting);
     }
 
     onSubmitMatchResult(formData: any) {

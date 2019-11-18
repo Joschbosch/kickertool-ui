@@ -19,6 +19,7 @@ import { StopwatchComponent } from './stopwatch/stopwatch.component';
 import { delay } from 'q';
 import { TournamentChannelCommands } from 'src/app/models/Tournament/TournamentChannelCommands';
 import { BroadcastMessage } from 'src/app/models/BroadcastMessage';
+import { PlayertournamentManagementComponent } from './playertournamentmanagement/playertournamentmanagement.component';
 declare var $: any;
 
 @Component({
@@ -30,6 +31,7 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
     @ViewChild(MatchresulteditorComponent, { static: false }) matchResultEditor: MatchresulteditorComponent;
     @ViewChild(RankingdetailsComponent, { static: false }) rankingDetails: RankingdetailsComponent;
     @ViewChild(StopwatchComponent, { static: false }) stopwatch: StopwatchComponent;
+    @ViewChild(PlayertournamentManagementComponent, { static: false }) playerManagement: PlayertournamentManagementComponent;
 
     private channel = new BroadcastChannel(TournamentChannelCommands.CHANNEL_ID);
 
@@ -83,7 +85,6 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
         while (true) {
             await delay(500);
             if (this.stopwatch !== undefined) {
-                this.tournament.settings.minutesPerMatch = 5;
                 this.stopwatch.initStopwatch(
                     this.tournament.settings.minutesPerMatch
                 );
@@ -132,11 +133,11 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
     }
 
     onShowPlayerManagementViewClicked() {
-        // TODO
+        this.playerManagement.init(this.tournamentId, this);
     }
 
     onOpenTournamentShowWindowClicked() {
-        window.open('/tournamentshow/' + this.tournamentId);
+        window.open('/tournamentshow');
     }
 
     onStartNextRoundClicked() {

@@ -49,7 +49,7 @@
                 <div class="col-6">
                     <label for="tournamentMode">Turniermodus</label>
                     <select id="tournamentMode" class="form-control" formControlName="mode">
-                        <option *ngFor="let mode of tournamentModes" [ngValue]="mode.key">{{mode.displayName}} </option>
+                        <option *ngFor="let mode of tournamentModes" [ngValue]="mode">{{mode.displayName}} </option>
                     </select>
                 </div>
             </div>
@@ -91,7 +91,7 @@
                 </button>
             </div>
             <div class="col-6" style="text-align: right;" *ngIf="playerSelectionPage">
-                <button type="submit" class="btn btn-kickertool float-right">
+                <button type="submit" class="btn btn-kickertool float-right" [disabled]="selectedPlayer.length === 0">
                     Turnier erstellen
                 </button>
             </div>

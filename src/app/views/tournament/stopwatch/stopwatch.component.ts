@@ -37,7 +37,7 @@ export class StopwatchComponent implements OnInit {
     }
 
     initStopwatch(minutes: number) {
-        this.stopwatch.init(minutes);
+        this.stopwatch.init(minutes, true);
     }
 
     onResetStopwatchClicked() {

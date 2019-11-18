@@ -9,13 +9,16 @@ export class Stopwatch {
     public baseMinutes: number;
     private timer: any;
     private state: StopwatchState;
+    private playSound: boolean;
+    private audio = new Audio('./../../../assets/audio/timeout.wav');
 
     public constructor() { }
 
-    public init(minutes: number) {
+    public init(minutes: number, playSound: boolean) {
         this.baseMinutes = minutes;
-        this.stopwatch = joda.LocalTime.of(0, minutes, 0, 0);
+        this.stopwatch = joda.LocalTime.of(0, this.baseMinutes, 3, 0);
         this.state = StopwatchState.INITIALIZED;
+        this.playSound = playSound;
         this.updateFormattedTime();
     }
 
@@ -27,7 +30,7 @@ export class Stopwatch {
 
     public reset() {
         clearInterval(this.timer);
-        this.stopwatch = joda.LocalTime.of(0, this.baseMinutes, 0, 0);
+        this.stopwatch = joda.LocalTime.of(0, this.baseMinutes, 3, 0);
         this.state = StopwatchState.INITIALIZED;
         this.updateFormattedTime();
     }
@@ -39,9 +42,26 @@ export class Stopwatch {
             this.updateFormattedTime();
             if (this.isTimeAtZero(this.stopwatch)) {
                 clearInterval(this.timer);
+                if (this.playSound) {
+                    this.audio.play();
+                }
                 this.state = StopwatchState.FINISHED;
             }
+
+            if (this.isTimeAtBaseMinutes(this.stopwatch)) {
+                if (this.playSound) {
+                    this.audio.play();
+                }
+            }
         }, 100);
+    }
+
+    isTimeAtBaseMinutes(stopwatch: joda.LocalTime) {
+        return (
+            stopwatch.minute() === this.baseMinutes &&
+            stopwatch.second() === 0 &&
+            stopwatch.nano() === 0
+        );
     }
 
     private isTimeAtZero(stopwatch: joda.LocalTime): boolean {

@@ -54,8 +54,10 @@ export class TournamentConfigurationComponent implements OnInit {
         this.tournamentConfigService
             .loadTournamentModes()
             .subscribe(
-                (resp: TournamentMode[]) => (this.tournamentModes = resp)
-            );
+                (resp: TournamentMode[]) => {
+                    this.tournamentModes = resp;
+                    this.newTournamentConfigurationForm.get('mode').setValue(this.tournamentModes[0]);
+            });
         this.playerService
             .loadAllPlayers()
             .subscribe((resp: Player[]) => (this.selectablePlayers = resp));
@@ -75,43 +77,45 @@ export class TournamentConfigurationComponent implements OnInit {
 
     private createTournamentConfiguration(formData: any): TournamentConfig {
         const newTournamentSettings = new TournamentSettings();
-        newTournamentSettings.mode = formData.mode;
 
-        newTournamentSettings.currentNoOfMatches =
-            formData.currentNoOfMatches == null
-                ? this.defaultConfiguration.settings.currentNoOfMatches
-                : formData.currentNoOfMatches;
         newTournamentSettings.goalsToWin =
             formData.goalsToWin == null
                 ? this.defaultConfiguration.settings.goalsToWin
                 : formData.goalsToWin;
+
         newTournamentSettings.matchesToWin =
             formData.matchesToWin == null
                 ? this.defaultConfiguration.settings.matchesToWin
                 : formData.matchesToWin;
+
         newTournamentSettings.minutesPerMatch =
-            formData.minutesPerMatch == null
+            formData.minutesPerGame == null
                 ? this.defaultConfiguration.settings.minutesPerMatch
-                : formData.minutesPerMatch;
-        newTournamentSettings.mode = formData.mode;
+                : formData.minutesPerGame;
+
+        newTournamentSettings.mode = formData.mode.key;
+
         newTournamentSettings.pointsForDraw =
             formData.pointsForDraw == null
                 ? this.defaultConfiguration.settings.pointsForDraw
                 : formData.pointsForDraw;
+
         newTournamentSettings.pointsForWinner =
             formData.pointsForWinner == null
                 ? this.defaultConfiguration.settings.pointsForWinner
                 : formData.pointsForWinner;
+
         newTournamentSettings.randomRounds =
             formData.randomRounds == null
                 ? this.defaultConfiguration.settings.randomRounds
                 : formData.randomRounds;
+
         newTournamentSettings.tableCount =
             formData.tableCount == null
                 ? this.defaultConfiguration.settings.tableCount
                 : formData.tableCount;
 
-        const tournamentName = formData.name.length === 0 ? 'Parc_IT_Turnier' : formData.name;
+        const tournamentName = formData.name.length === 0 ? 'parcIT Turnier' : formData.name;
 
         const newTournamentConfig = new TournamentConfig(tournamentName, newTournamentSettings);
         this.selectedPlayer.forEach((player) => newTournamentConfig.addPlayerToSelection(player));
