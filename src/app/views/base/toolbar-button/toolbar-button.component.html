@@ -1,5 +1,3 @@
 <div class="centeredElement">
-    <button [ngClass]="{'btn btn-default default': true, 'primary': highlighted}" (click)="onButtonClicked()">
-        <i class="{{icon}}"></i> {{text}}
-    </button>
+    <button pButton type="button" [ngClass]="{'c-btn-default': true, 'c-btn-primary': highlighted}" icon={{icon}} iconPos="left" label={{text}} (click)="onButtonClicked()"> </button>
 </div>

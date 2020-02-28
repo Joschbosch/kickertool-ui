@@ -8,23 +8,28 @@ $btn-width: 200px;
     margin-left: 10px;
 }
 
-.default {
-    color: $text-color-white;
-    width: $btn-width;
-}
-
-.default:hover {
-    color: $base-green;
-}
-
-.primary {
+.c-btn-default {
+    color: $text-color-white !important;
+    width: $btn-width !important;
+    background-color: transparent !important;
     border-width: 3px;
-    border-color: $base-green;
-    color: $base-green;
-    width: $btn-width;
+    border-color: $text-color-white !important;
 }
 
-.primary:hover {
-    color: $text-color-white;
-    background-color: $base-green;
+.c-btn-default:hover {
+    color: $base-green !important;
+}
+
+.c-btn-primary {
+    border-width: 3px;
+    border-color: $base-green !important;
+    color: $base-green !important;
+    width: $btn-width !important;
+    background-color: transparent !important;
+}
+
+.c-btn-primary:hover {
+    color: $text-color-white !important;
+    background-color: $base-green !important;
+    border-color: transparent !important;
 }

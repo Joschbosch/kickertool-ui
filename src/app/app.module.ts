@@ -18,6 +18,10 @@ import { MatchresulteditorComponent } from './views/tournament/matchresulteditor
 import { RankingdetailsComponent } from './views/tournament/rankingdetails/rankingdetails.component';
 import { StopwatchviewerComponent } from './views/tournament/tournament-viewer/stopwatchviewer/stopwatchviewer.component';
 import { PlayertournamentManagementComponent } from './views/tournament/playertournamentmanagement/playertournamentmanagement.component';
+import {ButtonModule} from 'primeng/button';
+import {InputTextModule} from 'primeng/inputtext';
+import {TableModule} from 'primeng/table';
+import {DropdownModule} from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -41,7 +45,11 @@ import { PlayertournamentManagementComponent } from './views/tournament/playerto
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ButtonModule,
+    InputTextModule,
+    DropdownModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
