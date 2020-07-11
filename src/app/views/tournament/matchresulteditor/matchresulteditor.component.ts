@@ -13,7 +13,7 @@ import { IRefreshCallback } from 'src/app/views/tournament/IRefreshCallback';
     styleUrls: ['./matchresulteditor.component.scss']
 })
 export class MatchresulteditorComponent implements OnInit {
-    @ViewChild('closeButton', { static: false }) closeButton: ElementRef;
+    @ViewChild('closeButton') closeButton: ElementRef;
 
     selectedMatch: Match;
     currentTournament: Tournament;

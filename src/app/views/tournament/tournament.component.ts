@@ -28,10 +28,10 @@ declare var $: any;
     styleUrls: ['./tournament.component.scss']
 })
 export class TournamentComponent implements OnInit, IRefreshCallback {
-    @ViewChild(MatchresulteditorComponent, { static: false }) matchResultEditor: MatchresulteditorComponent;
-    @ViewChild(RankingdetailsComponent, { static: false }) rankingDetails: RankingdetailsComponent;
-    @ViewChild(StopwatchComponent, { static: false }) stopwatch: StopwatchComponent;
-    @ViewChild(PlayertournamentManagementComponent, { static: false }) playerManagement: PlayertournamentManagementComponent;
+    @ViewChild(MatchresulteditorComponent) matchResultEditor: MatchresulteditorComponent;
+    @ViewChild(RankingdetailsComponent) rankingDetails: RankingdetailsComponent;
+    @ViewChild(StopwatchComponent) stopwatch: StopwatchComponent;
+    @ViewChild(PlayertournamentManagementComponent) playerManagement: PlayertournamentManagementComponent;
 
     private channel = new BroadcastChannel(TournamentChannelCommands.CHANNEL_ID);
 
