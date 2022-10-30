@@ -1,0 +1,101 @@
+<app-panel
+    title="Neues Turnier erstellen"
+    (closeEvent)="onCloseTournamentConfigurationPanel()">
+    <form
+        [formGroup]="newTournamentConfigurationForm"
+        (ngSubmit)="onCreateNewTournamentSubmit(newTournamentConfigurationForm.value)">
+        <div *ngIf="!playerSelectionPage" class="panel-content">
+            <div class="form-row">
+                <div class="col">
+                    <label for="tournamentName">Turniername</label>
+                    <input id="tournamentName" type="text" class="form-control" formControlName="name" placeholder="Turniername"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-6">
+                    <label for="tournamentTableCount">Anzahl Spieltische</label>
+                    <input id="tournamentTableCount" type="text" class="form-control" formControlName="tableCount" [placeholder]="defaultConfiguration.settings.tableCount"/>
+                </div>
+                <div class="col-6">
+                    <label for="tournamentRandomRounds">Zuf&auml;llige Runden</label>
+                    <input id="tournamentRandomRounds" type="text" class="form-control" formControlName="randomRounds" [placeholder]="defaultConfiguration.settings.randomRounds"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-6">
+                    <label for="tournamentMatchesToWin">Anzahl Spiele f&uuml;r Sieg</label>
+                    <input id="tournamentMatchesToWin" type="text" class="form-control" formControlName="matchesToWin" [placeholder]="defaultConfiguration.settings.matchesToWin"/>
+                </div>
+                <div class="col-6">
+                    <label for="tournamentGoalsToWin">Anzahl Tore f&uuml;r Sieg</label>
+                    <input id="tournamentGoalsToWin" type="text" class="form-control" formControlName="goalsToWin" [placeholder]="defaultConfiguration.settings.goalsToWin"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-6">
+                    <label for="tournamentMinutesPerGame">Minuten pro Spiel</label>
+                    <input id="tournamentMinutesPerGame" type="text" class="form-control" formControlName="minutesPerGame" [placeholder]="defaultConfiguration.settings.minutesPerMatch"/>
+                </div>
+                <div class="col-6">
+                    <label for="tournamentPointsToWin">Punkte f&uuml;r Sieg</label>
+                    <input id="tournamentPointsToWin" type="text" class="form-control" formControlName="pointsForWinner" [placeholder]="defaultConfiguration.settings.pointsForWinner"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-6">
+                    <label for="tournamentPointsForDraw">Punkte f&uuml;r Unentschieden</label>
+                    <input id="tournamentPointsForDraw" type="text" class="form-control" formControlName="pointsForDraw" [placeholder]="defaultConfiguration.settings.pointsForDraw"/>
+                </div>
+                <div class="col-6">
+                    <label for="tournamentMode">Turniermodus</label>
+                    <select id="tournamentMode" class="form-control" formControlName="mode">
+                        <option *ngFor="let mode of tournamentModes" [ngValue]="mode">{{mode.displayName}} </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="playerSelectionPage" class="panel-content">
+            <div class="form-row">
+                <div class="col">
+                    <h6>Spielerauswahl</h6>
+                    <button type="button" class="btn btn-kickertool w-100" (click)="moveAllToRight()">&gt;&gt;</button>
+                    <div class="list-group" style="height: 350px; overflow-y: scroll">
+                        <button type="button" class="list-group-item list-group-item-action"
+                            *ngFor="let player of selectablePlayers" (click)="moveToRight(player)">
+                                {{player.getFullName()}}
+                        </button>
+                    </div>
+                </div>
+                <div class="col">
+                    <h6 style="text-align: center">Ausgew&auml;hlte Spieler</h6>
+                    <button type="button" class="btn btn-kickertool w-100" (click)="moveAllToLeft()">&lt;&lt;</button>
+                    <div class="list-group" style="height: 350px; overflow-y: scroll" id="selectedPlayers" name="selectedPlayers">
+                        <button type="button" class="list-group-item list-group-item-action"
+                            *ngFor="let player of selectedPlayer" (click)="moveToLeft(player)">
+                                {{player.getFullName()}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div style="text-align: right;" *ngIf="!playerSelectionPage">
+            <button type="button" class="btn btn-kickertool" (click)="onMoveToPlayerSelectionPageClicked()">
+                Zur Spielerauswahl <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+        <div class="form-row">
+            <div class="col-6" style="text-align: left;" *ngIf="playerSelectionPage">
+                <button type="button" class="btn btn-kickertool" (click)="onMoveToPreviousPageClicked()">
+                    <i class="fas fa-arrow-left"></i> Zur&uuml;ck
+                </button>
+            </div>
+            <div class="col-6" style="text-align: right;" *ngIf="playerSelectionPage">
+                <button type="submit" class="btn btn-kickertool float-right" [disabled]="selectedPlayer.length === 0">
+                    Turnier erstellen
+                </button>
+            </div>
+        </div>
+    </form>
+</app-panel>
+

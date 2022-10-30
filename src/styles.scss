@@ -1,1 +1,72 @@
-/* You can add global styles to this file, and also import other style files */
+$bg_image: url('/assets/images/bg.png');
+$base-green: #27AE60;
+$hover-green: #219250;
+$disabled: #95a5a6;
+$text-color-white: #ECF0F1;
+
+html {
+    height: 100%;
+    max-height: 100%;
+}
+
+body {
+    height: 100%;
+    max-height: 100%;
+	background: linear-gradient(
+                    rgba(17,18,19,0.75),
+                    rgba(17,18,19,0.75)),
+                $bg_image center;
+    background-size: cover;
+}
+
+.icon-size {
+    height: 20px;
+}
+
+h1 {
+    color: $text-color-white;
+}
+
+td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.btn-kickertool {
+    background-color: $base-green;
+    color: $text-color-white;
+    border-color: $base-green;
+}
+
+.btn-kickertool:hover {
+    color: $text-color-white;
+    background-color: $hover-green;
+    border-color: $hover-green;
+}
+
+.btn-kickertool.disabled, .btn-kickertool:disabled {
+    background-color: $disabled;
+    border-color: $disabled;
+    color: $text-color-white;
+}
+
+.panel-content {
+    height: 450px;
+}
+
+
+.menubar {
+    height: 100px;
+}
+
+#logo {
+    float: left;
+    height: 100%;
+}
+
+.button-bar {
+    float: right;
+    text-align: right;
+    height: 100%;
+    width: 50%;
+}

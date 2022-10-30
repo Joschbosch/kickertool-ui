@@ -1,0 +1,35 @@
+<app-panel
+    title="Spielerverwaltung"
+    (closeEvent)="onClosePlayerManagementPanel()">
+    <div style="height: 450px; max-height: 450px; overflow-y: scroll; margin-bottom: 10px;">
+        <app-table [headers]="['Vorname', 'Nachname', '']">
+            <tr *ngFor="let player of players; let i = index">
+                <td>{{ player.firstName }}</td>
+                <td>{{ player.lastName }}</td>
+                <td style="padding: 5px">
+                    <button type="button" class="btn btn-danger" (click)="onPlayerDeleteClicked(player.uid, i)">
+                        <i class="fas fa-trash fa-sm"></i>
+                    </button>
+                </td>
+            </tr>
+        </app-table>    
+    </div>
+    <form
+        [formGroup]="newPlayerForm"
+        (ngSubmit)="onCreateNewPlayerSubmit(newPlayerForm.value)">
+        <div class="form-row">
+            <div class="col-10">
+                <input
+                    type="text"
+                    class="form-control"
+                    formControlName="name"
+                    placeholder="Neuer Name"/>
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-kickertool float-right">
+                    Anlegen
+                </button>
+            </div>
+        </div>
+    </form>
+</app-panel>

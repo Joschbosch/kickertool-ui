@@ -1,0 +1,13 @@
+<div class="container-fluid" style="height: 100%">
+    <div class="menubar">
+        <div id="logo">
+            <img src="./../../assets/images/parcit-logo.png" />
+        </div>
+        <div class="button-bar">
+            <app-toolbar-button text="Spielerverwaltung" icon="fas fa-user" (clicked)="onPlayerManagementClicked()"></app-toolbar-button>
+            <app-toolbar-button text="Neues Turnier" icon="fas fa-futbol" [highlighted]="true" (clicked)="onNewTournamentClicked()"></app-toolbar-button>
+        </div>
+    </div>
+    <app-player-management *ngIf="showPlayerManagement" (closeEvent)="onClosePlayerManagementPanel()"></app-player-management>
+    <app-tournament-configuration *ngIf="newTournament" (closeEvent)="onCloseNewTournamentPanel()"></app-tournament-configuration>
+</div>

@@ -1,0 +1,70 @@
+<div class="container-fluid" style="height: 100%;">
+    <div class="row" style="height: 25%;">
+        <div class="col-3">
+            <div id="logo">
+                <img src="./../../assets/images/parcit-logo.png" />
+            </div>
+        </div>
+        <div class="col-6">
+            <app-stopwatchviewer></app-stopwatchviewer>
+        </div>
+        <div class="col-3" style="text-align: right;">
+            <h1>{{ tournament.name }}</h1>
+        </div>
+    </div>
+    <div class="row" style="height: 75%; max-height: 75%">
+        <!-- Matches -->
+        <div class="col-5" style="height: 95%">
+            <app-table [headers]="['Team 1', 'Ergebnis', 'Team 2', 'Tisch']" >
+                <tr *ngFor="let match of currentMatches">
+                    <td>{{match.homeTeam.player1.getFullName()}}<br />{{match.homeTeam.player2.getFullName()}}</td>
+                    <td>{{match.scoreHome}} : {{match.scoreVisiting}}</td>
+                    <td>{{match.visitingTeam.player1.getFullName()}}<br />{{match.visitingTeam.player2.getFullName()}}</td>
+                    <td>
+                        <div>
+                            {{match.gameTableDescription}}
+                        </div>
+                        <div>
+                            <img src="/assets/images/kickertable.png" height="50" />
+                        </div>
+                    </td>
+                </tr>
+            </app-table>
+        </div>
+        <!-- Filler -->
+        <div class="col-1"></div>
+        <!-- Rankings -->
+        <div class="col-6" style="height: 95%">
+            <app-table [headers]="['#', 'Spieler', 'Punkte', 'Tore', 'Tordifferenz']" [tableSmall]="true">
+                <tr *ngFor="let ranking of rankings">
+                    <td>{{ranking.rank}}</td>
+                    <td>{{ranking.player.getFullName()}}<p *ngIf="ranking.player.isPausing()">( pausiert )</p></td>
+                    <td>{{ranking.score}}</td>
+                    <td>{{ranking.goals}}</td>
+                    <td>{{ranking.goaldiff}}</td>
+                </tr>
+            </app-table>
+        </div>
+    </div>
+    <button #showTrophy hidden="true" data-toggle="modal" data-target="#tournament-finished-modal"></button>
+</div>
+
+<div class="modal" id="tournament-finished-modal" tabindex="-1" role="dialog" data-backdrop="static">
+	<div class="modal-dialog" role="document" style="max-width: 600px; width: 600px">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="row">
+					<div class="col">
+						<h2 style="text-align: center">Siegertreppchen</h2>
+						<div class="list-group" style="height: 600px" *ngIf="rankings">
+							<li class="list-group-item" *ngFor="let ranking of getTopThree()" style="margin: 10px">
+                                <img [src]="getTrophyURL(ranking.rank)" height="80px">
+                                <p class="winners">{{ranking.rank}}. {{ranking.player.firstName}} {{ranking.player.lastName}}</p>
+							</li>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

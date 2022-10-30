@@ -1,0 +1,8 @@
+<h1>{{stopwatch.stopwatchString}}</h1>
+<div class="row" style="align-content: center">
+    <div class="col">
+        <button type="button" style="margin-right: 5px; margin-left: 5px;" class="btn btn-kickertool" (click)="onResetStopwatchClicked()" [disabled]="stopwatch.isRunning() || stopwatch.isInitialized()"><i class="fa fa-step-backward"></i></button>
+        <button type="button" style="margin-right: 5px; margin-left: 5px;" class="btn btn-kickertool" (click)="onStartStopwatchClicked()" [disabled]="stopwatch.isRunning()"><i class="fa fa-play"></i></button>
+        <button type="button" style="margin-right: 5px; margin-left: 5px;" class="btn btn-kickertool" (click)="onPauseStopwatchClicked()" [disabled]="stopwatch.isPaused() || stopwatch.isInitialized()"><i class="fa fa-pause"></i></button>
+    </div>
+</div>
