@@ -11,7 +11,7 @@ export class Player {
         public isDummyPlayer: boolean
     ) {
         this.uid = '';
-        this.status = PlayerStatus.UNDEFINED;
+        this.status = PlayerStatus.NOT_IN_TOURNAMENT;
     }
 
     public static createFromJSON(jsonPlayer: Player) {

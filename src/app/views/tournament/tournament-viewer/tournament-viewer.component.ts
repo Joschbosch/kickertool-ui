@@ -19,9 +19,9 @@ export class TournamentViewerComponent implements OnInit {
     currentMatches: Match[];
     rankings: PlayerRankingRow[];
 
-    trophieURLS = ['./../../../../assets/images/Golden_Trophy.jpg',
-                    './../../../../assets/images/Silver_Trophy.jpg',
-                    './../../../../assets/images/Bronze_Trophy.jpg'];
+    trophieURLS = ['./../../../../assets/images/trophy_gold.jpg',
+                    './../../../../assets/images/trophy_silver.jpg',
+                    './../../../../assets/images/trophy_gold.jpg'];
 
     constructor(private zone: NgZone) {}
 
