@@ -145,7 +145,7 @@ export class TournamentComponent implements OnInit, IRefreshCallback {
     }
 
     onOpenTournamentShowWindowClicked() {
-        window.open('/tournamentshow');
+        window.open('/#/tournamentshow');
     }
 
     onStartNextRoundClicked() {
