@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: 'tournamentshow', component: TournamentViewerComponent}
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
