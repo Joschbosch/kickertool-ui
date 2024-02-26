@@ -1,4 +1,4 @@
-# Kickertool-UI 1.1.1
+# Kickertool-UI 1.1.2
 
 ## Installation instructions
 
